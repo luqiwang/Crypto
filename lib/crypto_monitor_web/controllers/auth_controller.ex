@@ -36,9 +36,6 @@ defmodule CryptoMonitor.AuthController do
   #   urls: %{profile: nil, website: nil}
   # }
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, params) do
-    IO.puts('***************')
-    IO.inspect(auth.info)
-    IO.puts('***************')
     user_params = %{token: auth.credentials.token, email: auth.info.email, provider: auth.provider|>Atom.to_string}
     changeset = User.changeset(%User{}, user_params)
 
