@@ -13,9 +13,19 @@
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
 
+import React from 'react';
+import ReactDom from 'react-dom';
+import { Provider } from 'react-redux';
+
+import App from './components/App';
+import store from './reducers';
 // Import local files
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+
+ReactDom.render(
+	<Provider store={store}><App /></Provider>,
+	document.querySelector('#root'));

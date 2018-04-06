@@ -44,6 +44,7 @@ defmodule CryptoMonitor.AuthController do
 
   def signout(conn, _params) do
     conn
+    |> put_flash(:info, "Sign out!")
     |> configure_session(drop: true)
     |> redirect(to: page_path(conn, :index))
   end
