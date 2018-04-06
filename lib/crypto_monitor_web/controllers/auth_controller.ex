@@ -36,7 +36,7 @@ defmodule CryptoMonitor.AuthController do
   #   urls: %{profile: nil, website: nil}
   # }
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, params) do
-    user_params = %{token: auth.credentials.token, email: auth.info.email, provider: auth.provider|>Atom.to_string}
+    user_params = %{email: auth.info.email, provider: auth.provider|>Atom.to_string}
     changeset = User.changeset(%User{}, user_params)
 
     signin(conn, changeset)
@@ -53,7 +53,6 @@ defmodule CryptoMonitor.AuthController do
     case insert_or_update_user(changeset) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "Welcome back!")
         |> put_session(:user_id, user.id)
         |> redirect(to: page_path(conn, :index))
       {:error, _reason} ->

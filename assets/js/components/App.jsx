@@ -3,6 +3,11 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions'
 
+import Nav from './Nav'
+import Login from './Login'
+import Monitor from './Monitor'
+import Name from './Name'
+
 class App extends Component {
   componentDidMount() {
     let user_id = document.querySelector('meta[name="user_id"]').content;
@@ -12,18 +17,24 @@ class App extends Component {
 	}
 
   render() {
-    let email = this.props.auth? this.props.auth.email : ""
-    let provider = this.props.auth? this.props.auth.provider : ""
+    if (!this.props.auth) {
+      return <Login />
+    }
+    let email = this.props.auth.email
+    let provider = this.props.auth.provider
     return (
       <Router>
-        <p>{provider + " user: " + email}</p>
+        <div>
+          <Nav user={this.props.auth}/>
+          <Name user={this.props.auth} />
+          <Route path="/monitor" exact={true} component={Monitor}/>
+        </div>
       </Router>
     )
   }
 }
 
 function state2props(state) {
-  console.log("authstate", state.auth)
   return {
     auth: state.auth,
   };

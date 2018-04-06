@@ -6,7 +6,7 @@ defmodule CryptoMonitor.Users.User do
   schema "users" do
     field :email, :string
     field :provider, :string
-    field :token, :string
+    field :name, :string
 
     timestamps()
   end
@@ -14,7 +14,7 @@ defmodule CryptoMonitor.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :provider, :token])
-    |> validate_required([:email, :provider, :token])
+    |> cast(attrs, [:email, :provider, :name])
+    |> validate_required([:email, :provider])
   end
 end

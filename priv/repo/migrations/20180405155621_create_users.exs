@@ -5,7 +5,7 @@ defmodule CryptoMonitor.Repo.Migrations.CreateUsers do
     create table(:users) do
       add :email, :string
       add :provider, :string
-      add :token, :string
+      add :name, :string
 
       timestamps()
     end

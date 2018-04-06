@@ -14,6 +14,6 @@ defmodule CryptoMonitorWeb.UserView do
     %{id: user.id,
       email: user.email,
       provider: user.provider,
-      token: user.token}
+      name: user.name}
   end
 end
