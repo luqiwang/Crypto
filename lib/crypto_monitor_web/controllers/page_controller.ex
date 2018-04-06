@@ -3,7 +3,7 @@ defmodule CryptoMonitorWeb.PageController do
 
   def index(conn, _params) do
     user_id = get_session(conn, :user_id)
-    token = "111"
+    token = "notoken"
     if user_id do
       token = Phoenix.Token.sign(conn, "auth token", user_id)
     end

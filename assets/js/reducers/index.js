@@ -2,10 +2,10 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import deepFreeze from 'deep-freeze';
 import reduxThunk from 'redux-thunk';
 
-import authReducer from './authReducer';
+import auth from './authReducer';
 
 function root_reducer(state0, action) {
-  let reducer = combineReducers({authReducer});
+  let reducer = combineReducers({auth});
   let state1 = reducer(state0, action);
   return deepFreeze(state1);
 };

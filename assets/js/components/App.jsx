@@ -5,18 +5,28 @@ import * as actions from '../actions'
 
 class App extends Component {
   componentDidMount() {
-    if (window.user_info) {
-      this.props.fetchUser(window.user_info.user_id);  
+    let user_id = document.querySelector('meta[name="user_id"]').content;
+    if (user_id) {
+      this.props.fetchUser(user_id);
     }
 	}
 
   render() {
+    let email = this.props.auth? this.props.auth.email : ""
+    let provider = this.props.auth? this.props.auth.provider : ""
     return (
       <Router>
-        <p>react loaded</p>
+        <p>{provider + " user: " + email}</p>
       </Router>
     )
   }
 }
 
-export default connect(null, actions)(App);
+function state2props(state) {
+  console.log("authstate", state.auth)
+  return {
+    auth: state.auth,
+  };
+}
+
+export default connect(state2props, actions)(App);
