@@ -5,21 +5,27 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
-let NameForm = props => {
+function NameForm(props) {
   const submitName = () => {
+    if(!props.name || props.name.trim() == ""){
+      alert("Name can not be empty")
+      return;
+    }
     props.addName(props.user.id, props.name)
     return <Redirect to="/monitor" push={true} />
   }
+
   return (
     <form onSubmit={props.handleSubmit(submitName)}>
       <div>
-       <label htmlFor="name">Name</label>
-       <Field name="name" component="input" type="text" />
+       <label htmlFor="name">This is the first time you login, please input your name</label>
+       <Field class="form-control" name="name" component="input" type="text" />
      </div>
-      <button type="submit">Submit</button>
+      <button class="btn btn-primary btn-name" type="submit">Submit</button>
     </form>
   )
 }
+
 let NameForm1 = reduxForm({
   form: 'name'
 })(NameForm)

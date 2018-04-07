@@ -19,6 +19,8 @@ import { Provider } from 'react-redux';
 
 import App from './components/App';
 import store from './reducers';
+import _ from 'underscore';
+window._ = _;
 // Import local files
 //
 // Local files can be imported directly using relative
