@@ -36,7 +36,7 @@ class App extends Component {
 
 function state2props(state) {
   return {
-    auth: state.auth,
+    auth: state.auth
   };
 }
 

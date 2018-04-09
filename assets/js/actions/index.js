@@ -13,3 +13,7 @@ export const addName = (id, input) => async dispatch => {
   let data = Object.assign({}, res.data.data, {token: token})
   dispatch({ type: 'FETCH_USER', payload: data });
 }
+
+export const setWarn = (message) => dispatch => {
+  dispatch({type: 'SET_WARN',payload: message})
+}
