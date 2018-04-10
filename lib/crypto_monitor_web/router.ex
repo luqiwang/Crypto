@@ -32,5 +32,6 @@ defmodule CryptoMonitorWeb.Router do
   scope "/api/v1", CryptoMonitorWeb do
     pipe_through :api
     resources "/users", UserController, except: [:new, :edit]
+    resources "/coins", CoinController, except: [:new, :edit]
   end
 end

@@ -1,7 +1,7 @@
 defmodule CryptoMonitorWeb.PageController do
   use CryptoMonitorWeb, :controller
   import HTTPoison
-  @url "https://www.cryptocompare.com/api/data/coinlist/"
+  @url "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR"
 
   def index(conn, _params) do
     case HTTPoison.get(@url) do
