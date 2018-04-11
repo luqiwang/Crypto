@@ -13,7 +13,7 @@ defmodule CryptoMonitor.Application do
       # Start the endpoint when the application starts
       supervisor(CryptoMonitorWeb.Endpoint, []),
       # Start your own worker by calling: CryptoMonitor.Worker.start_link(arg1, arg2, arg3)
-      # worker(CryptoMonitor.Worker, [arg1, arg2, arg3]),
+      worker(CryptoMonitor.Info, []),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -45,7 +45,7 @@ defmodule CryptoMonitor.Mixfile do
       {:ueberauth_google, "~> 0.7"},
       {:ueberauth_facebook, "~> 0.7"},
       {:httpoison, "~> 1.0"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
     ]
   end
 

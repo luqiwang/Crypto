@@ -4,14 +4,6 @@ defmodule CryptoMonitorWeb.PageController do
   @url "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR"
 
   def index(conn, _params) do
-    case HTTPoison.get(@url) do
-      {:ok, %{status_code: 200, body: body}} ->
-        res = Poison.decode!(body)
-        IO.puts('***************')
-        IO.inspect(res)
-        IO.puts('***************')
-      {:ok, %{status_code: 404}} -> IO.puts("404 NOT FOUND")
-    end
     user_id = get_session(conn, :user_id)
     token = "notoken"
     if user_id do
