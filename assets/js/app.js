@@ -26,8 +26,6 @@ window._ = _;
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-// import socket from "./socket"
-
 ReactDom.render(
 	<Provider store={store}><App /></Provider>,
 	document.querySelector('#root'));
