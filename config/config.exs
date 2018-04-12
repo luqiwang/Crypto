@@ -37,6 +37,8 @@ config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,
   client_id: "1610377759049002",
   client_secret: "16a51d99170aa49f24224423e35ca3f1"
 
+config :sendgrid,
+  api_key: "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"
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
