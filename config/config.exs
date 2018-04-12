@@ -30,8 +30,8 @@ config :ueberauth, Ueberauth,
   ]
 
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: "83232779181-mu5rfucgkmepus330hq6es842495bspj.apps.googleusercontent.com",
-  client_secret: "aJKfrgO5UtO21CTl9txs7j3B"
+  client_id: "694663354088-cksivadb9g737vi5k53mh9qqi0qtumrf.apps.googleusercontent.com"
+  client_secret: "LLiWgeVO4vQIkfLcwVVVrHXw"
 
 config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,
   client_id: "1610377759049002",
