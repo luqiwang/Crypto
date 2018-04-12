@@ -1,4 +1,6 @@
 import React from 'react';
+import CoinList from './CoinList'
+
 export default function Login () {
   return (
     <div>
@@ -8,6 +10,9 @@ export default function Login () {
       <a href="/auth/facebook" className="btn btn-block btn-social btn-facebook">
         <span className="fa fa-facebook"></span> Sign in with Facebook
       </a>
+      <div>
+        <CoinList />
+      </div>
     </div>
   )
 }

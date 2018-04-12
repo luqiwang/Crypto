@@ -16,18 +16,24 @@ class App extends Component {
       this.props.fetchUser(user_id);
       let channel = socket.channel("/", {})
       channel.join()
-           .receive("ok", resp => console.log("Success!",resp))
+           .receive("ok", resp => {
+             console.log("Success Connect")
+             this.props.getCoinList(resp)
+           })
            .receive("error", resp => { console.log("Fail to join", resp) });
-      channel.on("coin", resp => console.log("Coin Info", resp))
+      channel.on("coin", resp => this.props.getCoinList(resp))
     }
 	}
+
 
   render() {
     if (!this.props.auth) {
       return <Login />
     }
+
     let email = this.props.auth.email
     let provider = this.props.auth.provider
+
     return (
       <Router>
         <div>

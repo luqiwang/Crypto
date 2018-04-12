@@ -3,7 +3,8 @@
 defmodule CryptoMonitor.Info do
   use GenServer
   import HTTPoison
-  @url "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR"
+  @listurl "https://www.cryptocompare.com/api/data/coinlist/"
+  @snapurl "https://www.cryptocompare.com/api/data/coinsnapshot/?fsym="
 
   def start_link do
     GenServer.start_link(__MODULE__, %{})
@@ -15,23 +16,45 @@ defmodule CryptoMonitor.Info do
   end
 
   def get_btc do
-    case HTTPoison.get(@url) do
+    case HTTPoison.get(@listurl) do
       {:ok, %{status_code: 200, body: body}} ->
-        res = Poison.decode!(body)
-      {:ok, %{status_code: 404}} -> IO.puts("404 NOT FOUND")
+        coins = Poison.decode!(body) |> Map.get("Data") |> Enum.map(fn(x) -> clean_list(x) end)
+        coinInfos = getCoinInfos(coins);
+        coinInfos = Enum.sort(coinInfos, &(Map.get(&1, :PRICE)>Map.get(&2, :PRICE))) |> Enum.slice(0, 20)
+        m = %{"Data" => coinInfos};
+      {:error, %{status_code: 404}} -> IO.puts("404 NOT FOUND")
     end
   end
 
+  defp getCoinInfos(coins) do
+    snapshots = []
+    res = Enum.reduce(coins, [], fn(x, acc) -> [snapshot(x) | acc] end)
+    res = Enum.filter(res, fn(x) -> x != nil end)
+  end
+
+  defp snapshot(coin) do
+    url = @snapurl <> Map.get(coin, "Symbol") <> "&tsym=USD"
+    case HTTPoison.get(url) do
+      {:ok, %{status_code: 200, body: body}} ->
+        lsthead = Poison.decode!(body) |> Map.get("Data") |> Map.get("AggregatedData")
+      {:error, %{status_code: 404}} -> nil
+    end
+  end
+
+  defp clean_list(item) do
+    {aa, bb} = item
+    bb
+  end
+
   def handle_info(:work, state) do
-    coin = get_btc
-    IO.inspect(coin)
+    coin = get_btc()
     broadcast(coin)
     schedule_work()
     {:noreply, state}
   end
 
   defp schedule_work() do
-    Process.send_after(self(), :work, 10 * 1000) # Every 10s
+    Process.send_after(self(), :work, 5 * 1000) # Every 10s
   end
 
   defp broadcast(coin) do
