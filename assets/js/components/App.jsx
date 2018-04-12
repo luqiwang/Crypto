@@ -18,16 +18,19 @@ class App extends Component {
       channel.join()
            .receive("ok", resp => console.log("Success!",resp))
            .receive("error", resp => { console.log("Fail to join", resp) });
-      channel.on("coin", resp => console.log("Coin Info", resp))
+      channel.on("coin", resp => this.props.getCoinList(resp))
     }
 	}
+
 
   render() {
     if (!this.props.auth) {
       return <Login />
     }
+
     let email = this.props.auth.email
     let provider = this.props.auth.provider
+
     return (
       <Router>
         <div>

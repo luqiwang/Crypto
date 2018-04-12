@@ -3,13 +3,17 @@
 defmodule CryptoMonitor.Info do
   use GenServer
   import HTTPoison
-  @url "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR"
+  @url "https://www.cryptocompare.com/api/data/coinlist/"
 
+  # https://www.cryptocompare.com/api/data/coinlist/
   def start_link do
     GenServer.start_link(__MODULE__, %{})
   end
 
   def init(state) do
+    coin = get_btc
+    # IO.inspect(coin)
+    broadcast(coin)
     schedule_work()
     {:ok, state}
   end
@@ -24,7 +28,7 @@ defmodule CryptoMonitor.Info do
 
   def handle_info(:work, state) do
     coin = get_btc
-    IO.inspect(coin)
+    # IO.inspect(coin)
     broadcast(coin)
     schedule_work()
     {:noreply, state}
