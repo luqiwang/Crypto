@@ -10,7 +10,6 @@ defmodule CryptoMonitor.Info do
   end
 
   def init(state) do
-    send_email()
     schedule_work()
     {:ok, state}
   end
