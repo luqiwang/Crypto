@@ -2,7 +2,7 @@ defmodule CryptoMonitorWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", CryptoMonitorWeb.RoomChannel
+  channel "*", CryptoMonitorWeb.CoinChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

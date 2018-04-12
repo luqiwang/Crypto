@@ -1,12 +1,14 @@
 defmodule CryptoMonitor.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias CryptoMonitor.Coins.Coin
 
 
   schema "users" do
     field :email, :string
     field :provider, :string
     field :name, :string
+    has_many :coins, Coin, foreign_key: :user_id
 
     timestamps()
   end

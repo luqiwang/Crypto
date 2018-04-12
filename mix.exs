@@ -20,7 +20,7 @@ defmodule CryptoMonitor.Mixfile do
   def application do
     [
       mod: {CryptoMonitor.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth, :ueberauth_google, :ueberauth_facebook]
+      extra_applications: [:logger, :runtime_tools, :ueberauth, :ueberauth_google, :ueberauth_facebook, :sendgrid]
     ]
   end
 
@@ -43,7 +43,10 @@ defmodule CryptoMonitor.Mixfile do
       {:cowboy, "~> 1.0"},
       {:ueberauth, "~> 0.4"},
       {:ueberauth_google, "~> 0.7"},
-      {:ueberauth_facebook, "~> 0.7"}
+      {:ueberauth_facebook, "~> 0.7"},
+      {:httpoison, "~> 1.0"},
+      {:poison, "~> 3.1"},
+      {:sendgrid, "~> 1.8.0"}
     ]
   end
 

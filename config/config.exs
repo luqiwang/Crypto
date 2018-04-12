@@ -30,13 +30,15 @@ config :ueberauth, Ueberauth,
   ]
 
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: "694663354088-cksivadb9g737vi5k53mh9qqi0qtumrf.apps.googleusercontent.com"
-  client_secret: "LLiWgeVO4vQIkfLcwVVVrHXw"
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
 
 config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,
-  client_id: "1610377759049002",
-  client_secret: "16a51d99170aa49f24224423e35ca3f1"
+  client_id: System.get_env("FACEBOOK_CLIENT_ID"),
+  client_secret: System.get_env("FACEBOOK_CLIENT_SECRET")
 
+config :sendgrid,
+  api_key: System.get_env("SENDGRID_API_KEY")
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

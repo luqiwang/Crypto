@@ -1,10 +1,7 @@
-defmodule CryptoMonitorWeb.PageView do
+defmodule CryptoMonitorWeb.TokenView do
   use CryptoMonitorWeb, :view
 
   def render("token.json", %{user: user, token: token}) do
-    IO.puts("***********************")
-    IO.inspect(user)
-    IO.puts("***********************")
     %{
       user_id: user.id,
       token: token,

@@ -3,12 +3,14 @@ import deepFreeze from 'deep-freeze';
 import reduxThunk from 'redux-thunk';
 
 import auth from './authReducer';
+import message from './messageReducer';
 import { reducer as reduxForm }  from 'redux-form';
 
 function root_reducer(state0, action) {
   let reducer = combineReducers({
     auth: auth,
-    form: reduxForm
+    form: reduxForm,
+    message: message
   });
   let state1 = reducer(state0, action);
   return deepFreeze(state1);
