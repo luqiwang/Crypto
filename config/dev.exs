@@ -55,7 +55,7 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :crypto_monitor, CryptoMonitor.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "wangyichen",
+  username: "wangluqi",
   password: "",
   database: "crypto_monitor_dev",
   hostname: "localhost",

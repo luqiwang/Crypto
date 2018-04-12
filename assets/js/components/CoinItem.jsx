@@ -26,7 +26,9 @@ function CoinItem(params) {
   }
 
 
-  if (!params.coin.price) params.getPrice( params.coin.CoinName, params.coin.Symbol);
+  if (!params.coin.price) {
+    params.getPrice( params.coin.CoinName, params.coin.Symbol);
+  }
 
   return <Card>
     <CardBody>

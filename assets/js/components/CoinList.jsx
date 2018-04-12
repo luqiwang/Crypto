@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 function CoinList(params) {
 
   // variables
-  let coins = _.map(_.sortBy(params.coins, function(coin) {return coin.SortOrder}), (tt) => {
+  let coins = _.map(coins, (tt) => {
     //console.log("coin:", tt);
     return <CoinItem key={tt.id} coin={tt} />
   });

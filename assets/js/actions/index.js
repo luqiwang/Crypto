@@ -19,8 +19,7 @@ export const setWarn = (message) => dispatch => {
 }
 
 export const getCoinList = (resp) => dispatch => {
-
-  console.log("before send: ", resp);
+	console.log("RESP1", resp.Data)
   dispatch({type: 'GET_COINS', payload:resp.Data});
 }
 
