@@ -46,11 +46,11 @@ function AlertForm(props) {
   return (
       <form onSubmit={props.handleSubmit(submitAlert)}>
         <div>
-         <label htmlFor="limit_high">Please input high price</label>
+         <label htmlFor="limit_high">Please input high threshold price</label>
          <Field class="form-control" name="limit_high" component="input" type="text" />
        </div>
        <div>
-        <label htmlFor="limit_low">Please input low price</label>
+        <label htmlFor="limit_low">Please input low threshold price</label>
         <Field class="form-control" name="limit_low" component="input" type="text" />
       </div>
         <p className='warn'>{props.message.nameMessage}</p>
