@@ -28,8 +28,6 @@ export const getCoinList = (resp) => dispatch => {
 		//console.log("cc", cc[1]["SortOrder"]);
 		return parseInt(cc[1]["SortOrder"]);
 	});
-	console.log("LIST", lst)
-
   dispatch({type: 'GET_COINS', payload:lst});
 }
 

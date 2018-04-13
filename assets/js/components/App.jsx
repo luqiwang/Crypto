@@ -24,7 +24,10 @@ class App extends Component {
 
            })
            .receive("error", resp => { console.log("Fail to join", resp) });
-      channel.on("coin", resp => this.props.getCoinList(resp))
+      channel.on("coin", resp => {
+        this.props.getPrices(resp)
+        this.props.getCoinList(resp)
+      })
     }
 	}
 

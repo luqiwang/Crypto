@@ -12,7 +12,7 @@ function CoinList(params) {
 
   // variables
   let coins = _.map(_.map(params.coins, (cc) => cc[1]), (tt) => {
-    return <CoinItem key={tt.id} coin={tt} />
+    return <CoinItem key={tt.CoinName} coin={tt} />
   });
 
   // methods

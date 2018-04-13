@@ -4,7 +4,6 @@ defmodule CryptoMonitor.Info do
   use GenServer
   import HTTPoison
   @listurl "https://www.cryptocompare.com/api/data/coinlist/"
-  @snapurl "https://www.cryptocompare.com/api/data/coinsnapshot/?fsym="
   @priceurl "https://min-api.cryptocompare.com/data/pricemulti?fsyms="
 
   def start_link do
@@ -25,11 +24,8 @@ defmodule CryptoMonitor.Info do
         coinList = coinList
                   |>Map.to_list()
                   |>Enum.sort(&(String.to_integer(Map.get(elem(&1, 1), "SortOrder")) < String.to_integer(Map.get(elem(&2, 1), "SortOrder"))))
-                  |>Enum.slice(0,10)
+                  |>Enum.slice(0,20)
                   |>Enum.reduce(%{}, fn(x, acc) -> helper(x, acc) end);
-        IO.puts('****************')
-        IO.inspect(coinList)
-        IO.puts('****************')
         coinList
       {:error, %{status_code: 404}} -> IO.puts("404 NOT FOUND")
     end
@@ -42,7 +38,7 @@ defmodule CryptoMonitor.Info do
   end
 
   def get_prices(coinList) do
-    query = Enum.reduce(coinList, "", fn(x, acc) -> get_symbol(x) <> " " <> acc end)
+    prices = Enum.reduce(coinList, "", fn(x, acc) -> get_symbol(x) <> " " <> acc end)
             |> String.split()
             |> Enum.chunk_every(50)
             |> Enum.map(fn(q) -> group_query(q) end)

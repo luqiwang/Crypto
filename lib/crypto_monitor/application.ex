@@ -14,6 +14,7 @@ defmodule CryptoMonitor.Application do
       supervisor(CryptoMonitorWeb.Endpoint, []),
       # Start your own worker by calling: CryptoMonitor.Worker.start_link(arg1, arg2, arg3)
       worker(CryptoMonitor.Info, []),
+      worker(CryptoMonitor.Email, []),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
