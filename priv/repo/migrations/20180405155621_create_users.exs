@@ -6,7 +6,7 @@ defmodule CryptoMonitor.Repo.Migrations.CreateUsers do
       add :email, :string
       add :provider, :string
       add :name, :string
-
+      add :photo, :string
       timestamps()
     end
 

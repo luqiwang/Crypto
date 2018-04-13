@@ -9,6 +9,7 @@ defmodule CryptoMonitor.Users.User do
     field :provider, :string
     field :name, :string
     has_many :coins, Coin, foreign_key: :user_id
+    field :photo, :string
 
     timestamps()
   end
@@ -16,7 +17,7 @@ defmodule CryptoMonitor.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :provider, :name])
+    |> cast(attrs, [:email, :provider, :name, :photo])
     |> validate_required([:email, :provider])
   end
 end
