@@ -8,7 +8,7 @@ import NameForm from './NameForm'
 function Name(props) {
   return (
     <div>
-      <Modal isOpen={props.user.name == null}>
+      <Modal isOpen={props.user.name == null || props.message.profileMessage}>
        <ModalHeader>Input Your Name</ModalHeader>
          <ModalBody>
            <NameForm  user={props.user}/>

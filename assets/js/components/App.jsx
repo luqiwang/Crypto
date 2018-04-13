@@ -44,7 +44,7 @@ class App extends Component {
       <Router>
         <div>
           <Nav user={this.props.auth}/>
-          <Name user={this.props.auth} />
+          <Name user={this.props.auth} message={this.props.message}/>
           <Route path="/" exact={true} component={CoinList} />
           <Route path="/monitor" exact={true} component={Monitor}/>
         </div>
@@ -55,7 +55,8 @@ class App extends Component {
 
 function state2props(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
+    message: state.message,
   };
 }
 

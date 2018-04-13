@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import CoinItem from './CoinItem';
 import _ from 'underscore';
 import { Button, FormGroup, Label, Input, Container, Row, Col } from 'reactstrap';
+import { Card, CardBody } from 'reactstrap';
 
 import * as actions from '../actions';
 import { connect } from 'react-redux';
@@ -19,13 +20,19 @@ function CoinList(params) {
 
   // render
   return<div>
-    <Row>
-        <Col>Coin</Col>
-        <Col>Price</Col>
-        <Col>Hold</Col>
-        <Col>Detail</Col>
-        <Col>Setting</Col>
-    </Row>
+
+    <Card>
+      <CardBody>
+      <Row>
+          <Col>Icon</Col>
+          <Col>Coin</Col>
+          <Col>Price</Col>
+          <Col>Hold</Col>
+          <Col>Detail</Col>
+          <Col>Setting</Col>
+      </Row>
+    </CardBody>
+    </Card>
 
     <div>
       { coins }

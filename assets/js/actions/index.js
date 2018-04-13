@@ -34,3 +34,11 @@ export const getCoinList = (resp) => dispatch => {
 export const getPrices = (resp) => dispatch => {
 	dispatch({type: 'GET_PRICES', payload:resp.prices});
 }
+
+export const flipAlertModal = (message) => dispatch => {
+  dispatch({type: 'EDITING_COIN', payload:message});
+}
+
+export const setName = (message) => dispatch => {
+  dispatch({type: 'EDIT_NAME', payload:message});
+}

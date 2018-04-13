@@ -10,9 +10,6 @@ export default function Login () {
       <a href="/auth/facebook" className="btn btn-block btn-social btn-facebook">
         <span className="fa fa-facebook"></span> Sign in with Facebook
       </a>
-      <div>
-        <CoinList />
-      </div>
     </div>
   )
 }
