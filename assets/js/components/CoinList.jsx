@@ -20,8 +20,10 @@ function CoinList(params) {
 
   // render
   return<div>
-
-    <Card>
+    <div className="jumbotron" style={{fontSize:30, backgroundImage: "url(" + "images/jumbotron.jpg" + ")"}}>
+      <span style={{color:'grey'}}>CryptoMonitor</span>
+    </div>
+    <Card style={{backgroundColor: '#DDDDDD',}}>
       <CardBody>
       <Row>
           <Col>Icon</Col>
@@ -39,6 +41,7 @@ function CoinList(params) {
     </div>
 
   </div>;
+
 }
 
 function state2props(state) {
