@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, CardBody } from 'reactstrap';
 import { Button, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
-//import api from '../api'
 
 import * as actions from '../actions'
 import { connect } from 'react-redux';
@@ -26,17 +25,26 @@ function CoinItem(params) {
   }
 
 
-  if (!params.coin.price) {
-    params.getPrice( params.coin.CoinName, params.coin.Symbol);
-  }
+  function getPrice(sym) {
+    if (!params.prices[sym]) return ""
+    let price = params.prices[sym]["USD"];
+    return price;
 
+  }
+  let price = getPrice(params.coin.Symbol)
+  if (!price) return <div></div>;
   return <Card>
     <CardBody>
       <Row>
           <Col>{ params.coin.CoinName }</Col>
-          <Col>{ params.coin.price }</Col>
-          <Col>{ () => getHold(params.user.coins) }</Col>
-          <Col><Button onClick={ getDetail }>Detail</Button></Col>
+          <Col>${ price }</Col>
+          <Col></Col>
+          <Col>
+            <Link to={"/coins/"+params.coin.Symbol}
+              className={"btn btn-default"}>
+              Detail
+            </Link>
+          </Col>
           <Col><Button onClick={ setAlert }>Setting</Button></Col>
       </Row>
     </CardBody>
@@ -47,6 +55,7 @@ function CoinItem(params) {
 function state2props(state) {
   return {
     user: state.auth,
+    prices: state.prices,
   };
 }
 

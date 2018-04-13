@@ -11,8 +11,7 @@ import { connect } from 'react-redux';
 function CoinList(params) {
 
   // variables
-  let coins = _.map(coins, (tt) => {
-    //console.log("coin:", tt);
+  let coins = _.map(_.map(params.coins, (cc) => cc[1]), (tt) => {
     return <CoinItem key={tt.id} coin={tt} />
   });
 
@@ -38,6 +37,7 @@ function CoinList(params) {
 function state2props(state) {
   return {
     coins: state.coins,
+    prices: state.prices,
   };
 }
 

@@ -5,6 +5,7 @@ import reduxThunk from 'redux-thunk';
 import auth from './authReducer';
 import message from './messageReducer';
 import coins from './coinsReducer';
+import prices from './pricesReducer'
 import { reducer as reduxForm }  from 'redux-form';
 
 function root_reducer(state0, action) {
@@ -12,7 +13,8 @@ function root_reducer(state0, action) {
     auth: auth,
     form: reduxForm,
     message: message,
-    coins: coins
+    coins: coins,
+    prices: prices
   });
   let state1 = reducer(state0, action);
   return deepFreeze(state1);

@@ -7,6 +7,7 @@ import socket from "../socket"
 import Nav from './Nav'
 import Login from './Login'
 import Monitor from './Monitor'
+import CoinList from './CoinList';
 import Name from './Name'
 import CoinDetail from './coin_detail/CoinDetail'
 
@@ -19,7 +20,9 @@ class App extends Component {
       channel.join()
            .receive("ok", resp => {
              console.log("Success Connect")
+             this.props.getPrices(resp)
              this.props.getCoinList(resp)
+
            })
            .receive("error", resp => { console.log("Fail to join", resp) });
       channel.on("coin", resp => this.props.getCoinList(resp))
@@ -41,6 +44,7 @@ class App extends Component {
           <Link to="/coins/BTC">BTC</Link>
           <Nav user={this.props.auth}/>
           <Name user={this.props.auth} />
+          <Route path="/" exact={true} component={CoinList} />
           <Route path="/monitor" exact={true} component={Monitor}/>
           <Route path="/coins/:sym" exact={true} component={CoinDetail}/>
         </div>
