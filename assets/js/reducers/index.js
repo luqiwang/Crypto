@@ -12,7 +12,7 @@ function root_reducer(state0, action) {
     auth: auth,
     form: reduxForm,
     message: message,
-    coins: coins,
+    coins: coins
   });
   let state1 = reducer(state0, action);
   return deepFreeze(state1);
