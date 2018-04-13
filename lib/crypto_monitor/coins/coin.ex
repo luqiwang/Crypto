@@ -6,8 +6,8 @@ defmodule CryptoMonitor.Coins.Coin do
   schema "coins" do
     field :code, :string
     belongs_to :user, CryptoMonitor.Users.User
-    field :limit_high, :integer, default: 99999999
-    field :limit_low, :integer, default: -1
+    field :limit_high, :float, default: 99999999
+    field :limit_low, :float, default: -1
     timestamps()
   end
 

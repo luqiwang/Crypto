@@ -15,6 +15,7 @@ function NameForm(props) {
     }
     props.addName(props.user.id, props.name)
     props.setName(false);
+    props.setWarn("");
     return <Redirect to="/" push={true} />
   }
 

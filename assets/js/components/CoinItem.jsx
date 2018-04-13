@@ -33,7 +33,6 @@ function CoinItem(params) {
   }
 
   function isModalOpen(mess) {
-    console.log("msss", mess);
     return mess=="MODAL_OPEN"+"/"+params.coin.Symbol;
   }
 
