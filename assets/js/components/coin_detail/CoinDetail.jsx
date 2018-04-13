@@ -2,12 +2,14 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import RealTimeDetail from './RealTimeDetail'
 import GraphDetail from './GraphDetail'
+import cc from 'cryptocompare'
 
 export default class CoinDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       coin: null,
+      histoDay: null,
     };
   }
 
@@ -19,6 +21,10 @@ export default class CoinDetail extends Component {
     .catch(function (error) {
       console.log(error);
     });
+
+    cc.histoDay('BTC', 'USD')
+    .then(histoDay => this.setState({histoDay}))
+    .catch(console.error);
 
   }
 
@@ -34,7 +40,7 @@ export default class CoinDetail extends Component {
             (
               <div>
                 <RealTimeDetail price={coin['USD']} />
-                <GraphDetail price={coin['USD']} />
+                <GraphDetail data={this.state.histoDay} />
               </div>
             )
         }
