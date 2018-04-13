@@ -23,7 +23,7 @@ function CoinItem(params) {
 
   function getHold(lst) {
     let ifhas = false;
-    let idx = _.find(lst, function(coin){ return coin.name==params.coin.name; });
+    let idx = _.find(lst, function(cc){ return cc.name==params.coin.name; });
     if (idx) return "Yes";
     else return "No"
   }
@@ -57,7 +57,7 @@ function CoinItem(params) {
       <Row>
           <Col><img src={ iconUrl+params.coin.ImageUrl } height="100%" width="25%"/></Col>
           <Col>{ params.coin.CoinName }</Col>
-          <Col>${ price }</Col>
+          <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>
           <Col></Col>
           <Col><Button onClick={ getDetail }>Detail</Button></Col>
           <Col><Button onClick={ editCoin }>Setting</Button></Col>
