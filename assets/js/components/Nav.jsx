@@ -2,7 +2,13 @@ import React from 'react'
 import { NavLink, Redirect, Link } from 'react-router-dom';
 import { Form, FormGroup, NavItem, Input, Button } from 'reactstrap';
 
-export default function Nav(props) {
+import * as actions from '../actions'
+import { connect } from 'react-redux';
+
+function Nav(props) {
+  function editName() {
+    props.setName(true);
+  }
   return (
     <div>
       <nav className="navbar navbar-dark bg-primary navbar-expand">
@@ -19,9 +25,13 @@ export default function Nav(props) {
             <NavLink to="/monitor" href="#" className="nav-link">Monitor</NavLink>
           </NavItem>
         </ul>
-        <div className="nav-right">{props.user.name}</div>
+        <div className="nav-right" onClick={ editName }>
+          < img src = "http://graph.facebook.com/215610082529011/picture?type=square" className="head-photo"></img>
+        </div>
         <a href="/auth/signout"><div className="nav-right">Log out</div></a>
       </nav>
     </div>
   );
 }
+
+export default connect(null, actions)(Nav);

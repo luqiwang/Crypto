@@ -14,6 +14,10 @@ export const addName = (id, input) => async dispatch => {
   dispatch({ type: 'FETCH_USER', payload: data });
 }
 
+export const addAlert = (data) => async dispatch => {
+  const res = await axios.post('/api/v1/coins', {coin: data})
+}
+
 export const setWarn = (message) => dispatch => {
   dispatch({type: 'SET_WARN',payload: message})
 }
@@ -28,11 +32,17 @@ export const getCoinList = (resp) => dispatch => {
 		//console.log("cc", cc[1]["SortOrder"]);
 		return parseInt(cc[1]["SortOrder"]);
 	});
-	console.log("LIST", lst)
-
   dispatch({type: 'GET_COINS', payload:lst});
 }
 
 export const getPrices = (resp) => dispatch => {
 	dispatch({type: 'GET_PRICES', payload:resp.prices});
+}
+
+export const flipAlertModal = (message) => dispatch => {
+  dispatch({type: 'EDITING_COIN', payload:message});
+}
+
+export const setName = (message) => dispatch => {
+  dispatch({type: 'EDIT_NAME', payload:message});
 }
