@@ -14,6 +14,10 @@ export const addName = (id, input) => async dispatch => {
   dispatch({ type: 'FETCH_USER', payload: data });
 }
 
+export const addAlert = (data) => async dispatch => {
+  const res = await axios.post('/api/v1/coins', {coin: data})
+}
+
 export const setWarn = (message) => dispatch => {
   dispatch({type: 'SET_WARN',payload: message})
 }

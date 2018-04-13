@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import * as actions from '../actions'
 import { connect } from 'react-redux';
+import AlertForm from './AlertForm'
 
 
 
@@ -29,14 +30,6 @@ function CoinItem(params) {
 
   function editCoin() {
     params.flipAlertModal("MODAL_OPEN"+"/"+params.coin.Symbol);
-  }
-
-  function finishEditCoin() {
-    params.flipAlertModal("MODAL_CLOSE"+"/"+params.coin.Symbol);
-  }
-
-  function submitAlert() {
-
   }
 
   function isModalOpen(mess) {
@@ -74,20 +67,8 @@ function CoinItem(params) {
        <Modal isOpen={ isModalOpen(params.message.editCoinMessage) }>
        <ModalHeader>Setting Reminder</ModalHeader>
          <ModalBody>
-           <FormGroup>
-             <Label for="limitlow">LIMIT LOW</Label>
-             <Input type="text" name="limitlow" value={0} />
-           </FormGroup>
-
-           <FormGroup>
-             <Label for="limithigh">LIMIT HIGH</Label>
-             <Input type="text" name="limithigh" value={0}/>
-           </FormGroup>
+           <AlertForm code={params.coin.Symbol} />
          </ModalBody>
-         <ModalFooter>
-           <Button color="primary" onClick={()=> submitAlert() }>CONFIRM</Button>{' '}
-           <Button color="secondary" onClick={ finishEditCoin }>CLOSE</Button>
-         </ModalFooter>
        </Modal>
      </div>
   </Card>;

@@ -1,4 +1,3 @@
-import { Button, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import { Field, reduxForm, formValueSelector } from 'redux-form'
 import * as actions from '../actions'
 import { connect } from 'react-redux';
@@ -16,7 +15,7 @@ function NameForm(props) {
     }
     props.addName(props.user.id, props.name)
     props.setName(false);
-    return <Redirect to="/monitor" push={true} />
+    return <Redirect to="/" push={true} />
   }
 
   return (
