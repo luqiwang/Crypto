@@ -24,7 +24,7 @@ defmodule CryptoMonitor.Email do
 
   def check_prices(prices) do
     btc = Map.get(prices, "BTC") |> Map.get("USD")
-    if btc > 9000 do
+    if btc > 8500 do
       send_email()
     end
   end
@@ -39,7 +39,7 @@ defmodule CryptoMonitor.Email do
     |> SendGrid.Email.add_to("wangluqi1001@gmail.com")
     |> SendGrid.Email.put_from("no-reply@crypto.com")
     |> SendGrid.Email.put_subject("Alert From Crypto")
-    |> SendGrid.Email.put_text("BTC prices is above 9000!")
+    |> SendGrid.Email.put_text("BTC prices is above 8500!")
     |> SendGrid.Mailer.send()
   end
 end

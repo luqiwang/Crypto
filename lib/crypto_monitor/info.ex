@@ -77,12 +77,4 @@ defmodule CryptoMonitor.Info do
     CryptoMonitorWeb.Endpoint.broadcast! "/", "coin", coinMap
   end
 
-  defp send_email() do
-    SendGrid.Email.build()
-    |> SendGrid.Email.add_to("wangluqi1001@gmail.com")
-    |> SendGrid.Email.put_from("no-reply@crypto.com")
-    |> SendGrid.Email.put_subject("Hello From Crypto")
-    |> SendGrid.Email.put_text("Send by CryptoMonitor")
-    |> SendGrid.Mailer.send()
-  end
 end
