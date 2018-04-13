@@ -4,8 +4,10 @@ defmodule CryptoMonitorWeb.CoinChannel do
   alias Phoenix.Socket
 
   def join("/", payload, socket) do
-    coin = Info.get_btc
-    {:ok, coin, socket}
+    coinList = Info.get_coin_list
+    prices = Info.get_prices(coinList)
+    coinMap = %{"coinList" => coinList, "prices" => prices}
+    {:ok, coinMap, socket}
   end
 
   def handle_in("coin", payload, socket) do

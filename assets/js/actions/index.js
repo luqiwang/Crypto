@@ -19,15 +19,20 @@ export const setWarn = (message) => dispatch => {
 }
 
 export const getCoinList = (resp) => dispatch => {
-	console.log("RESP1", resp.Data)
-  dispatch({type: 'GET_COINS', payload:resp.Data});
+	let keys = Object.keys(resp.coinList);
+	let values = Object.values(resp.coinList);
+
+	let lst = _.zip(keys, values);
+
+	lst = _.sortBy(lst, function(cc){
+		//console.log("cc", cc[1]["SortOrder"]);
+		return parseInt(cc[1]["SortOrder"]);
+	});
+	console.log("LIST", lst)
+
+  dispatch({type: 'GET_COINS', payload:lst});
 }
 
-export const getPrice = (name, sym) => async dispatch => {
-  const res = await axios.get('https://min-api.cryptocompare.com/data/price?fsym='+sym+'&tsyms=USD');
-  let item = {}
-  item['sym'] = sym;
-  console.log("res:", res.data);
-  item['price'] = res.data.USD;
-  dispatch({type: 'GET_ITEM', payload:item});
+export const getPrices = (resp) => dispatch => {
+	dispatch({type: 'GET_PRICES', payload:resp.prices});
 }
