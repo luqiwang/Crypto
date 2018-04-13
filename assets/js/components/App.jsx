@@ -41,7 +41,6 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Link to="/coins/BTC">BTC</Link>
           <Nav user={this.props.auth}/>
           <Name user={this.props.auth} />
           <Route path="/" exact={true} component={CoinList} />

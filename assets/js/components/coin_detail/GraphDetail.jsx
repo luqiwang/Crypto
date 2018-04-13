@@ -14,15 +14,11 @@ data format
 },
 ...]
 */
-const GraphDetail = ({data}) => {
+const GraphDetail = ({graphData}) => {
+  if (!graphData) return (<div>Loading graphData ...</div>);
+  const data = {labels: graphData.labels, datasets: [{data: graphData.data}]};
 
-  const labels = data.map(o => new Date(o.time).getHours());
-  const ds = data.map(o => o.close);
-  const histoData = {labels, datasets: [{data: ds}]};
-
-  return (
-    <Line data={histoData} />
-  );
+  return <Line data={data} options={{legend:{display:false}}} />
 };
 
 export default GraphDetail;

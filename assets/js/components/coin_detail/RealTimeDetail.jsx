@@ -9,11 +9,11 @@ const RealTimeDetail = ({price}) => {
       <Table>
         <thead>
           <tr>
-            <th>"Mkt. Cap."</th>
-            <th>"Vol. 24H"</th>
-            <th>"Open 24h"</th>
-            <th>"Low/High 24h"</th>
-            <th>"Last trade"</th>
+            <th>Mkt. Cap.</th>
+            <th>Vol. 24H</th>
+            <th>Open 24H</th>
+            <th>Low/High 24H</th>
+            <th>Last trade</th>
           </tr>
         </thead>
         <tbody>
