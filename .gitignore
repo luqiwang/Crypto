@@ -26,4 +26,4 @@ npm-debug.log
 # secrets files as long as you replace their contents by environment
 # variables.
 /config/*.secret.exs
-set_up_env.sh
+setup_env.sh

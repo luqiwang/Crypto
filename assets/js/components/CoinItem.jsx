@@ -13,10 +13,6 @@ function CoinItem(params) {
 
   }
 
-  function getDetail() {
-
-  }
-
   function getHold(lst) {
     let ifhas = false;
     let idx = _.find(lst, function(coin){ return coin.name==params.coin.name; });
@@ -41,7 +37,7 @@ function CoinItem(params) {
           <Col></Col>
           <Col>
             <Link to={"/coins/"+params.coin.Symbol}
-              className={"btn btn-default"}>
+              className={"btn btn-primary"}>
               Detail
             </Link>
           </Col>
