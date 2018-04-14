@@ -22,7 +22,7 @@ function Nav(props) {
             <NavLink to="/" exact={true} activeClassName="active" className="nav-link">All</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to="/monitor" href="#" className="nav-link">Monitor</NavLink>
+            <NavLink to="/monitor" activeClassName="active" className="nav-link">Monitor</NavLink>
           </NavItem>
         </ul>
         <div className="nav-right" onClick={ editName }>

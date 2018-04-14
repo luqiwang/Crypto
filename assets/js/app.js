@@ -19,6 +19,7 @@ import { Provider } from 'react-redux';
 
 import App from './components/App';
 import store from './reducers';
+import $ from "jquery";
 import _ from 'underscore';
 window._ = _;
 // Import local files
@@ -26,6 +27,9 @@ window._ = _;
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-ReactDom.render(
-	<Provider store={store}><App /></Provider>,
-	document.querySelector('#root'));
+
+$(function() {
+	ReactDom.render(
+		<Provider store={store}><App /></Provider>,
+		document.querySelector('#root'));
+});
