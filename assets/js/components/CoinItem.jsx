@@ -40,17 +40,35 @@ function CoinItem(params) {
     if (!params.prices[sym]) return ""
     let price = params.prices[sym]["USD"];
     return price;
-
   }
+
+  function getMonitor() {
+    let monitors = params.user.coins;
+    let monitor = null;
+    _.each(monitors, (mm) => {
+      if (mm.code == params.coin.Symbol){
+        monitor = mm;
+      }
+    })
+    return monitor;
+  }
+
+  function renderButton() {
+    if (monitor) {
+      return <Button color='warning' onClick={ editCoin }>Edit Monitor</Button>
+    } else {
+      return <Button color='success' onClick={ editCoin }>Add Monitor</Button>
+    }
+  }
+
   let price = getPrice(params.coin.Symbol)
+  let monitor = getMonitor()
   if (!price) return <div></div>;
-
-
 
   return <Card>
     <CardBody>
       <Row>
-          <Col><img src={ iconUrl+params.coin.ImageUrl } height="100%" width="25%"/></Col>
+          <Col><img src={ iconUrl+params.coin.ImageUrl } height="100%" width="30%"/></Col>
           <Col>{ params.coin.CoinName }</Col>
           <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>
           <Col></Col>
@@ -60,14 +78,14 @@ function CoinItem(params) {
               Detail
             </Link>
           </Col>
-          <Col><Button onClick={ editCoin }>Setting</Button></Col>
+          <Col>{renderButton()}</Col>
       </Row>
     </CardBody>
     <div>
        <Modal isOpen={ isModalOpen(params.message.editCoinMessage) }>
        <ModalHeader>Setting Reminder</ModalHeader>
          <ModalBody>
-           <AlertForm code={params.coin.Symbol} />
+           <AlertForm code={params.coin.Symbol} monitor={monitor}/>
          </ModalBody>
        </Modal>
      </div>

@@ -19,7 +19,7 @@ function AlertForm(props) {
       props.setWarn("Input must be number");
       return;
     }
-    if (high <= low) {
+    if (parseFloat(high) <= parseFloat(low)) {
       props.setWarn("High price should larger than low price");
       return;
     }
@@ -28,8 +28,12 @@ function AlertForm(props) {
     data['limit_low'] = low
     data['user_id'] = props.user.id
     data['code'] = props.code
-    console.log("DATA",data)
-    props.addAlert(data);
+    if (props.monitor) {
+      props.editAlert(props.monitor.id, data)
+    } else {
+      props.addAlert(data);
+    }
+    props.fetchUser(props.user.id)
     props.flipAlertModal("MODAL_CLOSE");
     props.setWarn("");
   }
@@ -43,6 +47,30 @@ function AlertForm(props) {
     props.setWarn("");
   }
 
+  function deleteMonitor() {
+    props.deleteAlert(props.monitor.id)
+    props.fetchUser(props.user.id)
+    props.flipAlertModal("MODAL_CLOSE");
+    props.setWarn("");
+  }
+
+
+  function renderButtons() {
+    if (props.monitor) {
+      return (<div>
+        <button class="btn btn-primary btn-name" type="submit">Edit Monitor</button>
+        <button class="btn btn-danger btn-name" type="button" onClick={ deleteMonitor }>Delete Monitor</button>
+        <button class="btn btn-secondary btn-name" type="button" onClick={ finishEditCoin }>Back</button>
+      </div>)
+    } else {
+      return (
+        <div>
+          <button class="btn btn-primary btn-name" type="submit">Create Monitor</button>
+          <button class="btn btn-secondary btn-name" type="button" onClick={ finishEditCoin }>Back</button>
+        </div>
+      )
+    }
+  }
   return (
       <form onSubmit={props.handleSubmit(submitAlert)}>
         <div>
@@ -54,8 +82,7 @@ function AlertForm(props) {
         <Field class="form-control" name="limit_low" component="input" type="text" />
       </div>
         <p className='warn'>{props.message.nameMessage}</p>
-        <button class="btn btn-secondary btn-cancel" type="button" onClick={ finishEditCoin }>Cancel</button>
-        <button class="btn btn-primary btn-name" type="submit">Submit</button>
+        {renderButtons()}
       </form>
   )
 }
@@ -66,7 +93,6 @@ let AlertForm1 = reduxForm({
 const selector = formValueSelector('alert')
 
 function state2props(state) {
-  console.log("ALERT", state)
   return {
     user: state.auth,
     message: state.message,

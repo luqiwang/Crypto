@@ -1,0 +1,3 @@
+Monitor page icon 尺寸
+Navbar 点了Monitor亮的还是ALL
+第一载入页面总会刷新一次

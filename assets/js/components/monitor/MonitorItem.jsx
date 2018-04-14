@@ -20,29 +20,30 @@ function MonitorItem({coins, coin, price, message, flipAlertModal, history}) {
   }
 
   let iconUrl = "https://www.cryptocompare.com";
+
+
   return <Card>
     <CardBody>
       <Row>
-          <Col><img src={ iconUrl + coins[coin.code].ImageUrl} height="100%" width="25%"/></Col>
+          <Col><img src={ iconUrl + coins[coin.code].ImageUrl} height="100%" width="35%"/></Col>
           <Col>{ coins[coin.code].CoinName }</Col>
           <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>
-          <Col>Hold</Col>
-          <Col>{coin.limit_low} / {coin.limit_high}</Col>
+          <Col>{coin.limit_low}</Col>
+          <Col>{coin.limit_high}</Col>
           <Col>
             <Link to={"/coins/"+coin.code}
               className={"btn btn-primary"}>
               Detail
             </Link>
           </Col>
-          <Col><Button onClick={ editCoin }>Setting</Button></Col>
-          <Col><Button className="btn btn-primary">Remove</Button></Col>
+          <Col><Button color='warning' onClick={ editCoin }>Edit Monitor</Button></Col>
       </Row>
     </CardBody>
     <div>
        <Modal isOpen={ isModalOpen(message.editCoinMessage) }>
        <ModalHeader>Setting Reminder</ModalHeader>
          <ModalBody>
-           <AlertForm code={coin.code} />
+           <AlertForm code={coin.code} monitor={coin}/>
          </ModalBody>
        </Modal>
      </div>

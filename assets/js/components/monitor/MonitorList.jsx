@@ -19,11 +19,10 @@ export default function MonitorList({coins, prices}) {
           <Col>Icon</Col>
           <Col>Coin</Col>
           <Col>Price</Col>
-          <Col>Hold</Col>
-          <Col>Low / High Limits</Col>
+          <Col>Low Limit</Col>
+          <Col>High Limit</Col>
           <Col>Detail</Col>
           <Col>Setting</Col>
-          <Col>Cancel Monitoring</Col>
       </Row>
     </CardBody>
     </Card>

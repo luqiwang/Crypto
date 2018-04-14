@@ -15,7 +15,15 @@ export const addName = (id, input) => async dispatch => {
 }
 
 export const addAlert = (data) => async dispatch => {
-  const res = await axios.post('/api/v1/coins', {coin: data})
+  await axios.post('/api/v1/coins', {coin: data})
+}
+
+export const editAlert = (coin_id, data) => async dispatch => {
+  const res = await axios.put('/api/v1/coins/' + coin_id, {coin: data})
+}
+
+export const deleteAlert = (id) => async dispatch => {
+	const res = await axios.delete('/api/v1/coins/' + id)
 }
 
 export const setWarn = (message) => dispatch => {
