@@ -23,16 +23,7 @@ export const setWarn = (message) => dispatch => {
 }
 
 export const getCoinList = (resp) => dispatch => {
-	let keys = Object.keys(resp.coinList);
-	let values = Object.values(resp.coinList);
-
-	let lst = _.zip(keys, values);
-
-	lst = _.sortBy(lst, function(cc){
-		//console.log("cc", cc[1]["SortOrder"]);
-		return parseInt(cc[1]["SortOrder"]);
-	});
-  dispatch({type: 'GET_COINS', payload:lst});
+  dispatch({type: 'GET_COINS', payload: resp.coinList});
 }
 
 export const getPrices = (resp) => dispatch => {

@@ -11,8 +11,20 @@ import { connect } from 'react-redux';
 
 function CoinList(params) {
 
+  if (params.coins == null) return <div>Load...</div>;
+
+  // convert store.coins map to coinList
+  let keys = Object.keys(params.coins);
+  let values = Object.values(params.coins);
+
+  let lst = _.zip(keys, values);
+
+  lst = _.sortBy(lst, function(cc){
+    //console.log("cc", cc[1]["SortOrder"]);
+    return parseInt(cc[1]["SortOrder"]);
+  });
   // variables
-  let coins = _.map(_.map(params.coins, (cc) => cc[1]), (tt) => {
+  let coinList = _.map(_.map(lst, (cc) => cc[1]), (tt) => {
     return <CoinItem key={tt.CoinName} coin={tt} />
   });
 
@@ -37,7 +49,7 @@ function CoinList(params) {
     </Card>
 
     <div>
-      { coins }
+      { coinList }
     </div>
 
   </div>;

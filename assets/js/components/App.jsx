@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions'
 import socket from "../socket"
 
 import Nav from './Nav'
 import Login from './Login'
-import Monitor from './Monitor'
+import Monitor from './monitor/Monitor'
 import CoinList from './CoinList';
 import Name from './Name'
+import CoinDetail from './coin_detail/CoinDetail'
 
 class App extends Component {
   componentDidMount() {
@@ -47,6 +48,7 @@ class App extends Component {
           <Name user={this.props.auth} message={this.props.message}/>
           <Route path="/" exact={true} component={CoinList} />
           <Route path="/monitor" exact={true} component={Monitor}/>
+          <Route path="/coins/:sym" exact={true} component={CoinDetail}/>
         </div>
       </Router>
     )
