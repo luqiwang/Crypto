@@ -29,7 +29,6 @@ function CoinItem(params) {
   }
 
   function isModalOpen(mess) {
-    console.log("msss", mess);
     return mess=="MODAL_OPEN"+"/"+params.coin.Symbol;
   }
 
@@ -61,7 +60,7 @@ function CoinItem(params) {
               Detail
             </Link>
           </Col>
-          <Col><Button onClick={ setAlert }>Setting</Button></Col>
+          <Col><Button onClick={ editCoin }>Setting</Button></Col>
       </Row>
     </CardBody>
     <div>

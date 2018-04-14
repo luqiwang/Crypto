@@ -12,6 +12,9 @@ defmodule CryptoMonitorWeb.CoinView do
 
   def render("coin.json", %{coin: coin}) do
     %{id: coin.id,
-      code: coin.code}
+      code: coin.code,
+      limit_low: coin.limit_low,
+      limit_high: coin.limit_high
+    }
   end
 end

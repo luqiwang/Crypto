@@ -5,8 +5,8 @@ defmodule CryptoMonitor.Repo.Migrations.CreateCoins do
     create table(:coins) do
       add :code, :string
       add :user_id, references(:users, on_delete: :nothing)
-      add :limit_high, :integer
-      add :limit_low, :integer
+      add :limit_high, :float
+      add :limit_low, :float
       timestamps()
     end
 
