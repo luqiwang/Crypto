@@ -2,7 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import MonitorList from './MonitorList';
 
-function Monitor({coins, prices}) {
+function Monitor({coins, prices, history}) {
+  if (!prices) history.push('/');
 
   return (
   <div>
