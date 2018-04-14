@@ -6,7 +6,7 @@ import socket from "../socket"
 
 import Nav from './Nav'
 import Login from './Login'
-import Monitor from './Monitor'
+import Monitor from './monitor/Monitor'
 import CoinList from './CoinList';
 import Name from './Name'
 import CoinDetail from './coin_detail/CoinDetail'
