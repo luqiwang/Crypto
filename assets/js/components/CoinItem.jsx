@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import { Card, CardBody } from 'reactstrap';
 import { Button, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Line } from 'react-chartjs-2'
 
 import * as actions from '../actions'
 import { connect } from 'react-redux';
 import AlertForm from './AlertForm'
+import cc from 'cryptocompare'
 
 let iconUrl = "https://www.cryptocompare.com";
 
@@ -14,16 +16,37 @@ class CoinItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      graphData: null
+      graphData: null, // [data, ...]
+      price: this.props.prices[this.props.coin.Symbol].USD,
+      priceColor: "light"
     };
-  }
-  // methods
 
-  getHold(lst) {
-    let ifhas = false;
-    let idx = _.find(lst, function(cc){ return cc.name==this.props.coin.name; });
-    if (idx) return "Yes";
-    else return "No"
+    this.getHisto = this.getHisto.bind(this);
+  }
+
+  componentDidMount() {
+    this.getHisto();
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let color = "light";
+    const curPrice = prevState.price;
+    const nextPrice = nextProps.prices[nextProps.coin.Symbol].USD;
+    if (curPrice > nextPrice) color = "danger";
+    else if (curPrice < nextPrice) color = "success";
+    return {priceColor: color};
+  }
+
+  getHisto() {
+    cc.histoDay(this.props.coin.Symbol, 'USD', {limit: 7})
+    .then(resp => this.setState({
+      graphData:
+        {
+          labels: new Array(7),
+          datasets: [
+          {data: resp.map(o => o.close)}]}
+      }))
+    .catch(err => setTimeout(() => this.getHisto() , 5000));
   }
 
   editCoin() {
@@ -61,18 +84,32 @@ class CoinItem extends Component {
   }
 
   render() {
-    let price = this.getPrice(this.props.coin.Symbol)
-    let monitor = this.getMonitor()
+    if (this.state.priceColor != 'light') setTimeout(() => this.setState({priceColor: "light"}), 1000);
+
+    let price = this.getPrice(this.props.coin.Symbol);
+    let monitor = this.getMonitor();
     if (!price) return <div></div>;
 
       return (
         <Card>
           <CardBody>
             <Row>
-              <Col><img src={ iconUrl+this.props.coin.ImageUrl } height="100%" width="30%"/></Col>
+              <Col><img src={ iconUrl+this.props.coin.ImageUrl } height="100%" width="60%"/></Col>
               <Col>{ this.props.coin.CoinName }</Col>
-              <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>
-              <Col></Col>
+              {/* <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>*/}
+              <Col><span className={"p-2 rounded bg-" + this.state.priceColor}>${ price }</span></Col>
+              <Col>
+                {this.state.graphData ?
+                  <Line data={this.state.graphData}
+                    width={200}
+                    height={80}
+                    options={{
+                      maintainAspectRatio: false,
+                      legend:{display:false},
+                      scales: {xAxes: [{ticks: {display: false}}], yAxes: [{ticks: {display: false}}]}
+                    }} /> :
+                    "Loading..."}
+              </Col>
               <Col>
                 <Link to={"/coins/"+this.props.coin.Symbol}
                   className={"btn btn-primary"}>

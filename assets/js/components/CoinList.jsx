@@ -41,7 +41,7 @@ function CoinList(params) {
           <Col>Icon</Col>
           <Col>Coin</Col>
           <Col>Price</Col>
-          <Col>Hold</Col>
+          <Col>7d Chart(USD)</Col>
           <Col>Detail</Col>
           <Col>Setting</Col>
       </Row>
