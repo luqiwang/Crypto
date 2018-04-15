@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Card, CardBody } from 'reactstrap';
 import { Button, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter, Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -7,98 +7,100 @@ import * as actions from '../actions'
 import { connect } from 'react-redux';
 import AlertForm from './AlertForm'
 
+let iconUrl = "https://www.cryptocompare.com";
 
+class CoinItem extends Component {
 
-function CoinItem(params) {
-
-  let iconUrl = "https://www.cryptocompare.com";
-  // methods
-  function setAlert() {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      graphData: null
+    };
   }
+  // methods
 
-  function getHold(lst) {
+  getHold(lst) {
     let ifhas = false;
-    let idx = _.find(lst, function(cc){ return cc.name==params.coin.name; });
+    let idx = _.find(lst, function(cc){ return cc.name==this.props.coin.name; });
     if (idx) return "Yes";
     else return "No"
   }
 
-  function editCoin() {
-    params.flipAlertModal("MODAL_OPEN"+"/"+params.coin.Symbol);
+  editCoin() {
+    this.props.flipAlertModal("MODAL_OPEN"+"/"+this.props.coin.Symbol);
   }
 
-  function isModalOpen(mess) {
-    return mess=="MODAL_OPEN"+"/"+params.coin.Symbol;
+  isModalOpen(mess) {
+    return mess=="MODAL_OPEN"+"/"+this.props.coin.Symbol;
   }
 
-  function update() {
 
-  }
-
-  function getPrice(sym) {
-    if (!params.prices[sym]) return ""
-    let price = params.prices[sym]["USD"];
+  getPrice(sym) {
+    if (!this.props.prices[sym]) return ""
+    let price = this.props.prices[sym]["USD"];
     return price;
   }
 
-  function getMonitor() {
-    let monitors = params.user.coins;
+  getMonitor() {
+    let monitors = this.props.user.coins;
     let monitor = null;
     _.each(monitors, (mm) => {
-      if (mm.code == params.coin.Symbol){
+      if (mm.code == this.props.coin.Symbol){
         monitor = mm;
       }
     })
     return monitor;
   }
 
-  function renderButton() {
+  renderButton(monitor) {
     if (monitor) {
-      return <Button color='warning' onClick={ editCoin }>Edit Monitor</Button>
+      return <Button color='warning' onClick={ this.editCoin.bind(this) }>Edit Monitor</Button>
     } else {
-      return <Button color='success' onClick={ editCoin }>Add Monitor</Button>
+      return <Button color='success' onClick={ this.editCoin.bind(this) }>Add Monitor</Button>
     }
   }
 
-  let price = getPrice(params.coin.Symbol)
-  let monitor = getMonitor()
-  if (!price) return <div></div>;
+  render() {
+    let price = this.getPrice(this.props.coin.Symbol)
+    let monitor = this.getMonitor()
+    if (!price) return <div></div>;
 
-  return <Card>
-    <CardBody>
-      <Row>
-          <Col><img src={ iconUrl+params.coin.ImageUrl } height="100%" width="30%"/></Col>
-          <Col>{ params.coin.CoinName }</Col>
-          <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>
-          <Col></Col>
-          <Col>
-            <Link to={"/coins/"+params.coin.Symbol}
-              className={"btn btn-primary"}>
-              Detail
-            </Link>
-          </Col>
-          <Col>{renderButton()}</Col>
-      </Row>
-    </CardBody>
-    <div>
-       <Modal isOpen={ isModalOpen(params.message.editCoinMessage) }>
-       <ModalHeader>Setting Reminder</ModalHeader>
-         <ModalBody>
-           <AlertForm code={params.coin.Symbol} monitor={monitor}/>
-         </ModalBody>
-       </Modal>
-     </div>
-  </Card>;
+      return (
+        <Card>
+          <CardBody>
+            <Row>
+              <Col><img src={ iconUrl+this.props.coin.ImageUrl } height="100%" width="30%"/></Col>
+              <Col>{ this.props.coin.CoinName }</Col>
+              <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>
+              <Col></Col>
+              <Col>
+                <Link to={"/coins/"+this.props.coin.Symbol}
+                  className={"btn btn-primary"}>
+                  Detail
+                </Link>
+              </Col>
+              <Col>{this.renderButton(monitor)}</Col>
+            </Row>
+          </CardBody>
+          <div>
+            <Modal isOpen={ this.isModalOpen(this.props.message.editCoinMessage) }>
+              <ModalHeader>Setting Reminder</ModalHeader>
+              <ModalBody>
+                <AlertForm code={this.props.coin.Symbol} monitor={monitor}/>
+              </ModalBody>
+            </Modal>
+          </div>
+        </Card>
+      );
+    }
+  }
 
-}
+  function state2props(state) {
+    return {
+      user: state.auth,
+      prices: state.prices,
+      message: state.message,
+    };
+  }
 
-function state2props(state) {
-  return {
-    user: state.auth,
-    prices: state.prices,
-    message: state.message,
-  };
-}
-
-export default connect(state2props, actions)(CoinItem);
+  export default connect(state2props, actions)(CoinItem);
