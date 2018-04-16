@@ -17,8 +17,9 @@ defmodule CryptoMonitorWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    get "/coins/:sym", PageController, :index
+    get "/coins/:sym/:id", PageController, :index
     get "/monitor", PageController, :index
+    get "/news", PageController, :index
   end
 
   scope "/auth", CryptoMonitor do

@@ -64,6 +64,7 @@ function CoinItem(params) {
   let price = getPrice(params.coin.Symbol)
   let monitor = getMonitor()
   if (!price) return <div></div>;
+  //console.log(params.coin);
 
   return <Card>
     <CardBody>
@@ -73,7 +74,7 @@ function CoinItem(params) {
           <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>
           <Col></Col>
           <Col>
-            <Link to={"/coins/"+params.coin.Symbol}
+            <Link to={"/coins/"+params.coin.Symbol+"/"+params.coin.Id}
               className={"btn btn-primary"}>
               Detail
             </Link>

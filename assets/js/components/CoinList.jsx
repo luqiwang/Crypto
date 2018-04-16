@@ -25,6 +25,7 @@ function CoinList(params) {
   });
   // variables
   let coinList = _.map(_.map(lst, (cc) => cc[1]), (tt) => {
+    //onsole.log(tt);
     return <CoinItem key={tt.CoinName} coin={tt} />
   });
 

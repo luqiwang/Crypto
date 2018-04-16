@@ -4,7 +4,7 @@ import {Table} from 'reactstrap'
 const RealTimeDetail = ({price}) => {
 
   return (
-    <div>
+    <div style={{padding: "10px"}}>
       <h2>{price['PRICE']}</h2>
       <Table>
         <thead>

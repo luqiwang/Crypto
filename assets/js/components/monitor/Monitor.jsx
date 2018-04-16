@@ -6,8 +6,8 @@ function Monitor({coins, prices, history}) {
   if (!prices) history.push('/');
 
   return (
-  <div>
-    <h1>Your Monitoring</h1>
+  <div style={{padding: "10px"}}>
+    <h2>Your Monitoring</h2>
     <MonitorList coins={coins} prices={prices} />
   </div>
 
