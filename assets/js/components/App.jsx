@@ -10,6 +10,7 @@ import Monitor from './monitor/Monitor'
 import CoinList from './CoinList';
 import Name from './Name'
 import CoinDetail from './coin_detail/CoinDetail'
+import News from './News'
 
 class App extends Component {
   componentDidMount() {
@@ -48,7 +49,8 @@ class App extends Component {
           <Name user={this.props.auth} message={this.props.message}/>
           <Route path="/" exact={true} component={CoinList} />
           <Route path="/monitor" exact={true} component={Monitor}/>
-          <Route path="/coins/:sym" exact={true} component={CoinDetail}/>
+          <Route path="/news" exact={true} component={News}/>
+          <Route path="/coins/:sym/:id" exact={true} component={CoinDetail}/>
         </div>
       </Router>
     )

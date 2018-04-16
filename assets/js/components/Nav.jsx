@@ -24,6 +24,9 @@ function Nav(props) {
           <NavItem>
             <NavLink to="/monitor" className="nav-link">Monitor</NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink to="/news" activeClassName="active" className="nav-link">News</NavLink>
+          </NavItem>
         </ul>
         <div className="nav-right" onClick={ editName }>
           <span id="span-name">{props.user.name}</span>
