@@ -18,7 +18,7 @@ defmodule CryptoMonitor.Coins do
 
   """
   def list_coins do
-    Repo.all(Coin)
+    Repo.all(Coin) |> Repo.preload(:user)
   end
 
   @doc """

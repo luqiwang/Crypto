@@ -38,12 +38,15 @@ defmodule CryptoMonitor.Info do
   end
 
   def get_prices(coinList) do
+    IO.inspect "getting prices"
     prices = Enum.reduce(coinList, "", fn(x, acc) -> get_symbol(x) <> " " <> acc end)
             |> String.split()
             |> Enum.chunk_every(50)
             |> Enum.map(fn(q) -> group_query(q) end)
             |> Enum.concat
             |> Enum.into(%{})
+    GenServer.cast(Email, {:send_email, prices})
+    prices
   end
 
   def group_query(q) do

@@ -46,7 +46,8 @@ defmodule CryptoMonitor.Mixfile do
       {:ueberauth_facebook, "~> 0.7"},
       {:httpoison, "~> 1.0"},
       {:poison, "~> 3.1"},
-      {:sendgrid, "~> 1.8.0"}
+      {:sendgrid, "~> 1.8.0"},
+      {:distillery, "~> 1.5", runtime: false}
     ]
   end
 
