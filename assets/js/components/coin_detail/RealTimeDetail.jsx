@@ -1,8 +1,9 @@
 import React from 'react';
-import {Table, Row, Col} from 'reactstrap'
+import {Table, Row, Col} from 'reactstrap';
+import {connect} from 'react-redux'
 
 let iconUrl = "https://www.cryptocompare.com";
-const RealTimeDetail = ({coin, price}) => {
+const RealTimeDetail = ({coin, price, prices}) => {
 
   return (
     <div style={{padding: "10px"}}>
@@ -15,7 +16,7 @@ const RealTimeDetail = ({coin, price}) => {
           </div>
         </Col>
         <Col sm="10">
-          <h2>{price['PRICE']}</h2>
+          <h2>{prices[coin.Symbol].USD}</h2>
           <Table className="text-center" responsive>
             <thead>
               <tr>
@@ -41,4 +42,4 @@ const RealTimeDetail = ({coin, price}) => {
     </div>
   );
 }
-export default RealTimeDetail;
+export default connect(({prices}) => ({prices}))(RealTimeDetail);

@@ -25,7 +25,7 @@ function CoinList(params) {
   });
   // variables
   let coinList = _.map(_.map(lst, (cc) => cc[1]), (tt) => {
-    return <CoinItem key={tt.CoinName} coin={tt} />
+    return <CoinItem key={tt.CoinName} coin={tt} history={params.history}/>
   });
 
   // methods
@@ -39,7 +39,7 @@ function CoinList(params) {
           <Col sm="2"><strong>Coin</strong></Col>
           <Col sm="2"><strong>Price</strong></Col>
           <Col sm="2"><strong>7d Chart(USD)</strong></Col>
-          <Col sm="2"><strong>Detail</strong></Col>
+          <Col sm="2"><strong>Chg. 24H</strong></Col>
           <Col sm="2"><strong>Setting</strong></Col>
       </Row>
     </CardBody>

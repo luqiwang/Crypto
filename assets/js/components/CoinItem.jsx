@@ -7,7 +7,8 @@ import { Line } from 'react-chartjs-2'
 import * as actions from '../actions'
 import { connect } from 'react-redux';
 import AlertForm from './AlertForm'
-import cc from 'cryptocompare'
+import cc from 'cryptocompare';
+import axios from 'axios'
 
 let iconUrl = "https://www.cryptocompare.com";
 
@@ -17,8 +18,9 @@ class CoinItem extends Component {
     super(props);
     this.state = {
       graphData: null, // [data, ...]
-      price: this.props.prices[this.props.coin.Symbol].USD,
-      priceColor: "light"
+      price: this.props.prices[this.props.coin.Symbol] ? this.props.prices[this.props.coin.Symbol].USD : null,
+      priceColor: "light",
+      priceFull: null, // from priceFull api
     };
 
     this.getHisto = this.getHisto.bind(this);
@@ -26,15 +28,25 @@ class CoinItem extends Component {
 
   componentDidMount() {
     this.getHisto();
+    this.getPriceFull();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     let color = "light";
     const curPrice = prevState.price;
-    const nextPrice = nextProps.prices[nextProps.coin.Symbol].USD;
-    if (curPrice > nextPrice) color = "danger";
-    else if (curPrice < nextPrice) color = "success";
+    if (curPrice) {
+      const nextPrice = nextProps.prices[nextProps.coin.Symbol].USD;
+      if (curPrice > nextPrice) color = "danger";
+      else if (curPrice < nextPrice) color = "success";
+    }
     return {priceColor: color};
+  }
+
+  getPriceFull() {
+    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${this.props.coin.Symbol}&tsyms=USD`
+    axios.get(url)
+    .then(resp => {this.setState({priceFull: resp.data.DISPLAY[this.props.coin.Symbol]})})
+    .catch(err => setTimeout(() => this.getPriceFull(), 1000));
   }
 
   getHisto() {
@@ -50,7 +62,7 @@ class CoinItem extends Component {
             borderColor: "rgba(42, 181, 60, 0.8)"
           }]}
       }))
-    .catch(err => setTimeout(() => this.getHisto() , 5000));
+    .catch(err => setTimeout(() => this.getHisto() , 2000));
   }
 
   editCoin() {
@@ -99,9 +111,11 @@ class CoinItem extends Component {
           <CardBody>
             <Row className="text-center align-items-center">
               <Col sm="2"><img src={ iconUrl+this.props.coin.ImageUrl } height="100%" width="60%"/></Col>
-              <Col sm="2">
-                <p><strong>{ this.props.coin.CoinName }</strong></p>
-                <p><strong style={{color: "orange"}}>{ this.props.coin.Symbol}</strong></p>
+              <Col sm="2" onClick={() => this.props.history.push("/coins/"+this.props.coin.Symbol, {priceFull: this.state.priceFull})}>
+                <Button color="link">
+                  <p><strong>{ this.props.coin.CoinName }</strong></p>
+                  <p><strong style={{color: "orange"}}>{ this.props.coin.Symbol}</strong></p>
+                </Button>
               </Col>
               {/* <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>*/}
               <Col sm="2"><span className={"p-2 rounded bg-" + this.state.priceColor + (this.state.priceColor == "light" ? "" : " text-light")}>${ price }</span></Col>
@@ -118,10 +132,9 @@ class CoinItem extends Component {
                     "Loading..."}
               </Col>
               <Col sm="2">
-                <Link to={"/coins/"+this.props.coin.Symbol}
-                  className={"btn btn-outline-primary"}>
-                  Detail
-                </Link>
+                <span className={"p-2 rounded bg-light " + (this.state.priceFull && parseFloat(this.state.priceFull.USD.CHANGE24HOUR.substr(2)) >= 0 ? "text-success" : "text-danger")}>
+                  {this.state.priceFull ? this.state.priceFull.USD.CHANGE24HOUR : "Loading..."}
+                </span>
               </Col>
               <Col sm="2">{this.renderButton(monitor)}</Col>
             </Row>

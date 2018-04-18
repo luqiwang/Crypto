@@ -4,6 +4,8 @@ defmodule CryptoMonitor.Email do
   alias CryptoMonitor.Info
   alias CryptoMonitor.Coins
 
+  @template "Change my monitoring : #{System.get_env("MONITOR_URI")}"
+
   def start_link do
     # registered as Email
     GenServer.start_link(__MODULE__, %{}, name: Email)
@@ -30,13 +32,13 @@ defmodule CryptoMonitor.Email do
       # check last update time
       last_send_time = Map.get(acc, coin.id)
       # if it's the first time or the interval exceeds 1h
-      if last_send_time == nil || DateTime.diff(DateTime.utc_now, last_send_time) > 3600 do
+      if last_send_time == nil || DateTime.diff(DateTime.utc_now, last_send_time) > 2 * 60 do
         cond do
           price < coin.limit_low ->
-            send_email(coin.user.email, coin.code <> " is below " <> Float.to_string(coin.limit_low, decimals: 2))
+            send_email(coin.user.email, gen_email(coin.user.name, coin.code <> " is below " <> Float.to_string(coin.limit_low, decimals: 2) <> @template))
             acc = acc |> Map.put(coin.id, DateTime.utc_now)
           price > coin.limit_high ->
-            send_email(coin.user.email, coin.code <> " is above " <> Float.to_string(coin.limit_high, decimals: 2))
+            send_email(coin.user.email, gen_email(coin.user.name, coin.code <> " is above " <> Float.to_string(coin.limit_high, decimals: 2) <> @template))
             acc = acc |> Map.put(coin.id, DateTime.utc_now)
           true -> acc
         end
@@ -62,11 +64,17 @@ defmodule CryptoMonitor.Email do
   # end
 
   def send_email(to, text) do
+    IO.inspect "sending email to <" <> to <> "> : " <> text
     SendGrid.Email.build()
     |> SendGrid.Email.add_to(to)
     |> SendGrid.Email.put_from("no-reply@crypto.com")
     |> SendGrid.Email.put_subject("Alert From Crypto")
     |> SendGrid.Email.put_text(text)
     |> SendGrid.Mailer.send()
+    |> IO.inspect
+  end
+
+  defp gen_email(username, text) do
+    "Hi, #{username}\n\n#{text}\n\nBest,\n\nCrypto Team"
   end
 end
