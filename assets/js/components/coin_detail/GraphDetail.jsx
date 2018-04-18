@@ -16,7 +16,11 @@ data format
 */
 const GraphDetail = ({graphData}) => {
   if (!graphData) return (<div>Loading graphData ...</div>);
-  const data = {labels: graphData.labels, datasets: [{data: graphData.data}]};
+  const data = {labels: graphData.labels, datasets: [{
+    data: graphData.data,
+    backgroundColor: "rgba(42, 181, 60, 0.2)",
+    borderColor: "rgba(42, 181, 60, 0.8)"
+  }]};
 
   return <Line data={data} options={{legend:{display:false}}} />
 };

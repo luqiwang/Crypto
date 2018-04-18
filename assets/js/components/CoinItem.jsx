@@ -7,9 +7,14 @@ import { Line } from 'react-chartjs-2'
 import * as actions from '../actions'
 import { connect } from 'react-redux';
 import AlertForm from './AlertForm'
-import cc from 'cryptocompare'
+import cc from 'cryptocompare';
+import axios from 'axios'
 
 let iconUrl = "https://www.cryptocompare.com";
+const successBgColor = "rgba(42, 181, 60, 0.2)";
+const successColor = "rgba(42, 181, 60)";
+const dangerBgColor = "rgb(240, 34, 34, 0.2)";
+const dangerColor = "rgb(240, 34, 34)";
 
 class CoinItem extends Component {
 
@@ -18,14 +23,15 @@ class CoinItem extends Component {
     this.state = {
       graphData: null, // [data, ...]
       price: this.props.prices[this.props.coin.Symbol] ? this.props.prices[this.props.coin.Symbol].USD : null,
-      priceColor: "light"
+      priceColor: "light",
+      priceFull: null, // from priceFull api
     };
 
     this.getHisto = this.getHisto.bind(this);
   }
 
   componentDidMount() {
-    this.getHisto();
+    this.getPriceFull();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -39,16 +45,30 @@ class CoinItem extends Component {
     return {priceColor: color};
   }
 
+  getPriceFull() {
+    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${this.props.coin.Symbol}&tsyms=USD`
+    axios.get(url)
+    .then(resp => {
+      this.setState({priceFull: resp.data.DISPLAY[this.props.coin.Symbol]});
+      this.getHisto();
+    })
+    .catch(err => setTimeout(() => this.getPriceFull(), 1000));
+  }
+
   getHisto() {
     cc.histoDay(this.props.coin.Symbol, 'USD', {limit: 7})
     .then(resp => this.setState({
-      graphData:
-        {
+      graphData: {
           labels: new Array(7),
           datasets: [
-          {data: resp.map(o => o.close)}]}
-      }))
-    .catch(err => setTimeout(() => this.getHisto() , 5000));
+          {
+            data: resp.map(o => o.close),
+            backgroundColor: parseFloat(this.state.priceFull.USD.CHANGE24HOUR.substr(2)) >= 0 ? successBgColor : dangerBgColor,
+            borderColor: parseFloat(this.state.priceFull.USD.CHANGE24HOUR.substr(2)) >= 0 ? successColor : dangerColor
+          }]
+        }})
+      )
+  .catch(err => setTimeout(() => this.getHisto() , 2000));
   }
 
   editCoin() {
@@ -95,12 +115,17 @@ class CoinItem extends Component {
       return (
         <Card>
           <CardBody>
-            <Row>
-              <Col><img src={ iconUrl+this.props.coin.ImageUrl } height="100%" width="60%"/></Col>
-              <Col>{ this.props.coin.CoinName }</Col>
+            <Row className="text-center align-items-center">
+              <Col sm="2"><img src={ iconUrl+this.props.coin.ImageUrl } height="100%" width="60%"/></Col>
+              <Col sm="2" onClick={() => this.props.history.push("/coins/"+this.props.coin.Symbol, {priceFull: this.state.priceFull})}>
+                <Button color="link">
+                  <p><strong>{ this.props.coin.CoinName }</strong></p>
+                  <p><strong style={{color: "orange"}}>{ this.props.coin.Symbol}</strong></p>
+                </Button>
+              </Col>
               {/* <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>*/}
-              <Col><span className={"p-2 rounded bg-" + this.state.priceColor}>${ price }</span></Col>
-              <Col>
+              <Col sm="2"><span className={"p-2 rounded bg-" + this.state.priceColor + (this.state.priceColor == "light" ? "" : " text-light")}>${ price }</span></Col>
+              <Col sm="2">
                 {this.state.graphData ?
                   <Line data={this.state.graphData}
                     width={200}
@@ -112,13 +137,12 @@ class CoinItem extends Component {
                     }} /> :
                     "Loading..."}
               </Col>
-              <Col>
-                <Link to={"/coins/"+this.props.coin.Symbol}
-                  className={"btn btn-primary"}>
-                  Detail
-                </Link>
+              <Col sm="2">
+                <span className={"p-2 rounded bg-light " + (this.state.priceFull && parseFloat(this.state.priceFull.USD.CHANGE24HOUR.substr(2)) >= 0 ? "text-success" : "text-danger")}>
+                  {this.state.priceFull ? this.state.priceFull.USD.CHANGE24HOUR : "Loading..."}
+                </span>
               </Col>
-              <Col>{this.renderButton(monitor)}</Col>
+              <Col sm="2">{this.renderButton(monitor)}</Col>
             </Row>
           </CardBody>
           <div>

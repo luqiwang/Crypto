@@ -10,19 +10,16 @@ export default function MonitorList({coins, prices}) {
   );
 
   return <div>
-    <div className="jumbotron" style={{fontSize:30, backgroundImage: "url(" + "images/jumbotron.jpg" + ")"}}>
-      <span style={{color:'grey'}}>CryptoMonitor</span>
-    </div>
     <Card style={{backgroundColor: '#DDDDDD',}}>
       <CardBody>
-      <Row>
-          <Col>Icon</Col>
-          <Col>Coin</Col>
-          <Col>Price</Col>
-          <Col>Low Limit</Col>
-          <Col>High Limit</Col>
-          <Col>Detail</Col>
-          <Col>Setting</Col>
+      <Row className="text-center">
+          <Col><strong>Icon</strong></Col>
+          <Col><strong>Coin</strong></Col>
+          <Col><strong>Price</strong></Col>
+          <Col><strong>Low Limit</strong></Col>
+          <Col><strong>High Limit</strong></Col>
+          <Col><strong>Detail</strong></Col>
+          <Col><strong>Setting</strong></Col>
       </Row>
     </CardBody>
     </Card>

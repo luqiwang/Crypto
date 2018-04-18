@@ -61,6 +61,7 @@ class CoinList extends Component{
 
     let lst = _.zip(keys, values);
 
+
     lst = _.sortBy(lst, function(cc){
       //console.log("cc", cc[1]["SortOrder"]);
       return parseInt(cc[1]["SortOrder"]);
@@ -68,22 +69,19 @@ class CoinList extends Component{
     lst = lst.slice((this.state.currentPage - 1) * 20, this.state.currentPage * 20)
     // variables
     let coinList = _.map(_.map(lst, (cc) => cc[1]), (tt) => {
-      return <CoinItem key={tt.CoinName} coin={tt} />
+      return <CoinItem key={tt.CoinName} coin={tt} history={this.props.history}/>
     });
     return<div>
-      <div className="jumbotron" style={{fontSize:30, backgroundImage: "url(" + "images/jumbotron.jpg" + ")"}}>
-        <span style={{color:'grey'}}>CryptoMonitor</span>
-      </div>
       <Card style={{backgroundColor: '#DDDDDD',}}>
         <CardBody>
-        <Row>
-            <Col>Icon</Col>
-            <Col>Coin</Col>
-            <Col>Price</Col>
-            <Col>7d Chart(USD)</Col>
-            <Col>Detail</Col>
-            <Col>Setting</Col>
-        </Row>
+          <Row className="text-center align-items-center">
+            <Col sm="2"><strong>Icon</strong></Col>
+            <Col sm="2"><strong>Coin</strong></Col>
+            <Col sm="2"><strong>Price</strong></Col>
+            <Col sm="2"><strong>7d Chart(USD)</strong></Col>
+            <Col sm="2"><strong>Chg. 24H</strong></Col>
+            <Col sm="2"><strong>Setting</strong></Col>
+          </Row>
       </CardBody>
       </Card>
       <div>

@@ -46,7 +46,7 @@ export default class News extends Component {
     return (
       <div style={{padding: "10px"}}>
         <h2>All News</h2>
-        <form class="form-inline">
+        <form className="form-inline mb-3">
           <FormGroup>
             <Label for="key"><b>Key Word</b></Label> &nbsp;&nbsp;
             <Input type="text" name="key" id="key" align="right"/>

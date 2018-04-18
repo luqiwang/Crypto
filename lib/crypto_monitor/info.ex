@@ -73,7 +73,7 @@ defmodule CryptoMonitor.Info do
   end
 
   defp schedule_work() do
-    Process.send_after(self(), :work, 10 * 1000) # Every 10s
+    Process.send_after(self(), :work, 5 * 1000) # Every 10s
   end
 
   defp broadcast(coinMap) do
