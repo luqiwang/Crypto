@@ -5,21 +5,23 @@ import RealTimeDetail from './RealTimeDetail'
 import GraphDetail from './GraphDetail'
 import CoinNews from './CoinNews'
 import cc from 'cryptocompare'
+import {connect} from 'react-redux'
 
 
 const monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June",
 "July", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
 
-export default class CoinDetail extends Component {
+class CoinDetail extends Component {
   constructor(props) {
     /* props {
     coins: map from the redux store, containing all descriptions
     } */
+    console.log(props);
     super(props);
     this.state = {
       sym: this.props.match.params['sym'],
       coinId: this.props.match.params['id'],
-      priceFull: this.props.location.state.priceFull, // fetched from priceMultiple api, only contains prices info
+      priceFull: this.props.location.state ? this.props.location.state.priceFull : null, // fetched from priceMultiple api, only contains prices info
       graphData: null,
       coinInfo: null,
       news: null,
@@ -141,7 +143,7 @@ export default class CoinDetail extends Component {
     return (
       <div>
         {
-          priceFull == null ? <div>Loading...</div> :
+          !priceFull || !this.props.coins ? <div>Loading...</div> :
           (
             <div>
               <RealTimeDetail price={priceFull['USD']} coin={this.props.coins[this.state.sym]}/>
@@ -162,3 +164,5 @@ export default class CoinDetail extends Component {
       </div>);
     }
   }
+
+export default connect(({coins}) => ({coins}))(CoinDetail);
