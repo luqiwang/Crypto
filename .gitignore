@@ -27,3 +27,5 @@ npm-debug.log
 # variables.
 /config/*.secret.exs
 setup_env.sh
+
+.DS_Store

@@ -25,4 +25,4 @@ defmodule Seed do
   end
 end
 
-Seed.run
+#Seed.run
