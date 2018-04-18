@@ -50,7 +50,7 @@ class App extends Component {
           <Route path="/" exact={true} component={CoinList} />
           <Route path="/monitor" exact={true} component={Monitor}/>
           <Route path="/news" exact={true} component={News}/>
-          <Route path="/coins/:sym/:id" exact={true} component={CoinDetail}/>
+          <Route path="/coins/:sym" exact={true} component={CoinDetail}/>
         </div>
       </Router>
     )

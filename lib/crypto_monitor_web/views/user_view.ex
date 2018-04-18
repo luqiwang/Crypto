@@ -16,6 +16,7 @@ defmodule CryptoMonitorWeb.UserView do
       email: user.email,
       provider: user.provider,
       name: user.name,
+      photo: user.photo,
       coins: Phoenix.View.render_many(user.coins, CoinView, "coin.json")
     }
   end
