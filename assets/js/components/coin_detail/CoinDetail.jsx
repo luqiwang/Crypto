@@ -12,11 +12,14 @@ const monthNames = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June",
 
 export default class CoinDetail extends Component {
   constructor(props) {
+    /* props {
+    coins: map from the redux store, containing all descriptions
+    } */
     super(props);
     this.state = {
       sym: this.props.match.params['sym'],
       coinId: this.props.match.params['id'],
-      coin: null,
+      coin: null, // fetched from priceMultiple api, only contains prices info
       graphData: null,
       coinInfo: null,
       news: null,
@@ -34,27 +37,27 @@ export default class CoinDetail extends Component {
 
     /*
     var express = require('express');
-  	var cors = require('cors');
-  	var app = express();
+    var cors = require('cors');
+    var app = express();
 
-  	app.use(cors({
-  		origin: 'http://localhost:4000',
-  		credentials: true
-  	}));
+    app.use(cors({
+    origin: 'http://localhost:4000',
+    credentials: true
+    }));
     */
 
     /*
     const infoUrl = `https://www.cryptocompare.com/api/data/coinsnapshotfullbyid/?id=${this.state.coinId}`;
     axios.get(infoUrl) // , {withCredentials: true}
     .then(function (resp) {
-      this.setState({
-        coinInfo: resp.data,
-      });
-      console.log(resp.status);
-      console.log(this.state.coinInfo);
+    this.setState({
+    coinInfo: resp.data,
+    });
+    console.log(resp.status);
+    console.log(this.state.coinInfo);
     })
     .catch(function (error) {
-      console.log(error);
+    console.log(error);
     });
     */
 
@@ -101,6 +104,10 @@ export default class CoinDetail extends Component {
     }
   }
 
+  /*
+  get{TimePeriod} :
+  use apis to get historical prices, and set the state `graphData`
+  */
   getHour() {
     cc.histoMinute(this.state.sym, 'USD', {limit: 60})
     .then(resp => this.setState({graphData: this._extract(resp, "HOUR")}))
@@ -125,8 +132,6 @@ export default class CoinDetail extends Component {
     .catch(console.error);
   }
 
-
-
   render() {
     const coin = this.state.coin;
     const coinId = this.state.coinId;
@@ -134,20 +139,20 @@ export default class CoinDetail extends Component {
 
     return (
       <div>
-        <h1>{this.state.sym}</h1>
         {
           coin == null ? <div>Loading...</div> :
           (
             <div>
-              <RealTimeDetail price={coin['USD']} />
+              <RealTimeDetail price={coin['USD']} coin={this.props.coins[this.state.sym]}/>
               <div style={{padding: "10px"}}>
-                <GraphDetail graphData={this.state.graphData} />
-                <ButtonGroup>
-                  <Button onClick={this.getHour.bind(this)}>1 Hour</Button>
-                  <Button onClick={this.getDay.bind(this)}>1 Day</Button>
-                  <Button onClick={this.getWeek.bind(this)}>1 Week</Button>
-                  <Button onClick={this.getMonth.bind(this)}>1 Month</Button>
+                <h2>Historical Prices</h2>
+                <ButtonGroup className="mb-2">
+                  <Button outline onClick={this.getHour.bind(this)}>1 Hour</Button>
+                  <Button outline onClick={this.getDay.bind(this)}>1 Day</Button>
+                  <Button outline onClick={this.getWeek.bind(this)}>1 Week</Button>
+                  <Button outline onClick={this.getMonth.bind(this)}>1 Month</Button>
                 </ButtonGroup>
+                <GraphDetail graphData={this.state.graphData} />
               </div>
               <CoinNews news={news} sym={this.state.sym} />
             </div>

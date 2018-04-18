@@ -50,7 +50,7 @@ class App extends Component {
           <Route path="/" exact={true} component={CoinList} />
           <Route path="/monitor" exact={true} component={Monitor}/>
           <Route path="/news" exact={true} component={News}/>
-          <Route path="/coins/:sym/:id" exact={true} component={CoinDetail}/>
+          <Route path="/coins/:sym" exact={true} render={props => <CoinDetail {...props} coins={this.props.coins}/>} />
         </div>
       </Router>
     )
@@ -61,6 +61,7 @@ function state2props(state) {
   return {
     auth: state.auth,
     message: state.message,
+    coins: state.coins
   };
 }
 

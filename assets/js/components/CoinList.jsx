@@ -25,7 +25,6 @@ function CoinList(params) {
   });
   // variables
   let coinList = _.map(_.map(lst, (cc) => cc[1]), (tt) => {
-    //onsole.log(tt);
     return <CoinItem key={tt.CoinName} coin={tt} />
   });
 
@@ -33,18 +32,15 @@ function CoinList(params) {
 
   // render
   return<div>
-    <div className="jumbotron" style={{fontSize:30, backgroundImage: "url(" + "images/jumbotron.jpg" + ")"}}>
-      <span style={{color:'grey'}}>CryptoMonitor</span>
-    </div>
     <Card style={{backgroundColor: '#DDDDDD',}}>
       <CardBody>
-      <Row>
-          <Col>Icon</Col>
-          <Col>Coin</Col>
-          <Col>Price</Col>
-          <Col>7d Chart(USD)</Col>
-          <Col>Detail</Col>
-          <Col>Setting</Col>
+      <Row className="text-center align-items-center">
+          <Col sm="2"><strong>Icon</strong></Col>
+          <Col sm="2"><strong>Coin</strong></Col>
+          <Col sm="2"><strong>Price</strong></Col>
+          <Col sm="2"><strong>7d Chart(USD)</strong></Col>
+          <Col sm="2"><strong>Detail</strong></Col>
+          <Col sm="2"><strong>Setting</strong></Col>
       </Row>
     </CardBody>
     </Card>

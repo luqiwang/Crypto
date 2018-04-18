@@ -44,7 +44,11 @@ class CoinItem extends Component {
         {
           labels: new Array(7),
           datasets: [
-          {data: resp.map(o => o.close)}]}
+          {
+            data: resp.map(o => o.close),
+            backgroundColor: "rgba(42, 181, 60, 0.2)",
+            borderColor: "rgba(42, 181, 60, 0.8)"
+          }]}
       }))
     .catch(err => setTimeout(() => this.getHisto() , 5000));
   }
@@ -93,12 +97,15 @@ class CoinItem extends Component {
       return (
         <Card>
           <CardBody>
-            <Row>
-              <Col><img src={ iconUrl+this.props.coin.ImageUrl } height="100%" width="60%"/></Col>
-              <Col>{ this.props.coin.CoinName }</Col>
+            <Row className="text-center align-items-center">
+              <Col sm="2"><img src={ iconUrl+this.props.coin.ImageUrl } height="100%" width="60%"/></Col>
+              <Col sm="2">
+                <p><strong>{ this.props.coin.CoinName }</strong></p>
+                <p><strong style={{color: "orange"}}>{ this.props.coin.Symbol}</strong></p>
+              </Col>
               {/* <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>*/}
-              <Col><span className={"p-2 rounded bg-" + this.state.priceColor}>${ price }</span></Col>
-              <Col>
+              <Col sm="2"><span className={"p-2 rounded bg-" + this.state.priceColor + (this.state.priceColor == "light" ? "" : " text-light")}>${ price }</span></Col>
+              <Col sm="2">
                 {this.state.graphData ?
                   <Line data={this.state.graphData}
                     width={200}
@@ -110,13 +117,13 @@ class CoinItem extends Component {
                     }} /> :
                     "Loading..."}
               </Col>
-              <Col>
+              <Col sm="2">
                 <Link to={"/coins/"+this.props.coin.Symbol}
-                  className={"btn btn-primary"}>
+                  className={"btn btn-outline-primary"}>
                   Detail
                 </Link>
               </Col>
-              <Col>{this.renderButton(monitor)}</Col>
+              <Col sm="2">{this.renderButton(monitor)}</Col>
             </Row>
           </CardBody>
           <div>

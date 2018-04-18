@@ -13,7 +13,7 @@ function Nav(props) {
     <div>
       <nav className="navbar navbar-dark bg-primary navbar-expand">
         <Link to='/' style={{ textDecoration: 'none', color: 'white'}}>
-          <span className="navbar-brand">
+          <span style={{"font-family": "Georgia, serif"}} className="navbar-brand">
             Crypto
           </span>
         </Link>
@@ -34,6 +34,9 @@ function Nav(props) {
         </div>
         <a href="/auth/signout"><div className="nav-right">Log out</div></a>
       </nav>
+      <div className="jumbotron" style={{fontSize:30, backgroundImage: "url(" + "images/jumbotron.jpg" + ")"}}>
+        <span style={{color:'grey', "font-family": "Georgia, serif"}}>Crypto Monitor</span>
+      </div>
     </div>
   );
 }

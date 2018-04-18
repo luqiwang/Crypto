@@ -24,15 +24,18 @@ function MonitorItem({coins, coin, price, message, flipAlertModal, history}) {
 
   return <Card>
     <CardBody>
-      <Row>
-          <Col><img src={ iconUrl + coins[coin.code].ImageUrl} height="100%" width="35%"/></Col>
-          <Col>{ coins[coin.code].CoinName }</Col>
+      <Row className="text-center align-items-center">
+          <Col><img src={ iconUrl + coins[coin.code].ImageUrl} height="100%" width="60%"/></Col>
+          <Col>
+            <p><strong>{ coins[coin.code].CoinName }</strong></p>
+            <p><strong style={{color: "orange"}}>{ coins[coin.code].Symbol}</strong></p>
+          </Col>
           <Col><span style={{backgroundColor:'#DDDDDD', borderRadius:5, padding:10}}>${ price }</span></Col>
           <Col>{coin.limit_low}</Col>
           <Col>{coin.limit_high}</Col>
           <Col>
             <Link to={"/coins/"+coin.code}
-              className={"btn btn-primary"}>
+              className={"btn btn-outline-primary"}>
               Detail
             </Link>
           </Col>
