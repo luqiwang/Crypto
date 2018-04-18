@@ -11,20 +11,20 @@ defmodule CryptoMonitor.Info do
   end
 
   def init(state) do
-    coinList = get_coin_list()
+    coinList = get_coin_list(0, 100)
     state = Map.put(state, :coinList, coinList)
     schedule_work()
     {:ok, state}
   end
 
-  def get_coin_list do
+  def get_coin_list(left, right) do
     case HTTPoison.get(@listurl) do
       {:ok, %{status_code: 200, body: body}} ->
         coinList = Poison.decode!(body) |> Map.get("Data")
         coinList = coinList
                   |>Map.to_list()
                   |>Enum.sort(&(String.to_integer(Map.get(elem(&1, 1), "SortOrder")) < String.to_integer(Map.get(elem(&2, 1), "SortOrder"))))
-                  |>Enum.slice(0,20)
+                  |>Enum.slice(left, right)
                   |>Enum.reduce(%{}, fn(x, acc) -> helper(x, acc) end);
         coinList
       {:error, %{status_code: 404}} -> IO.puts("404 NOT FOUND")

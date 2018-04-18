@@ -22,7 +22,6 @@ defmodule CryptoMonitor.Email do
   # prices: :map -> %{"BTC": %{"USD" : 7000}, ...}
   # state:
   def handle_cast({:send_email, prices}, state) do
-    IO.inspect "sending email"
     coins = Coins.list_coins
     new_state = coins |> Enum.reduce(state, fn(coin, acc) ->
       price = prices[coin.code]["USD"]
@@ -31,6 +30,9 @@ defmodule CryptoMonitor.Email do
       last_send_time = Map.get(acc, coin.id)
       # if it's the first time or the interval exceeds 1h
       if last_send_time == nil || DateTime.diff(DateTime.utc_now, last_send_time) > 3600 do
+        IO.puts("*******************")
+        IO.inspect(price < coin.limit_low)
+        IO.puts("*******************")
         cond do
           price < coin.limit_low ->
             send_email(coin.user.email, coin.code <> " is below " <> Float.to_string(coin.limit_low, decimals: 2))

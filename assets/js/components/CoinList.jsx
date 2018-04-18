@@ -1,60 +1,107 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import CoinItem from './CoinItem';
 import _ from 'underscore';
-import { Button, FormGroup, Label, Input, Container, Row, Col } from 'reactstrap';
+import { Button, FormGroup, Label, Input, Container, Row, Col, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import { Card, CardBody } from 'reactstrap';
 
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 
 
-function CoinList(params) {
+class CoinList extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: 1
+    }
+    this.previousPage = this.previousPage.bind(this);
+    this.nextPage = this.nextPage.bind(this);
+  }
 
-  if (params.coins == null) return <div>Load...</div>;
+  previousPage() {
+    let page = this.state.currentPage == 1 ? 1 : this.state.currentPage - 1;
+    console.log("Page", page)
+    this.setState({currentPage: page})
+  }
 
-  // convert store.coins map to coinList
-  let keys = Object.keys(params.coins);
-  let values = Object.values(params.coins);
+  nextPage() {
+    let page = this.state.currentPage == 5 ? 5 : this.state.currentPage + 1;
+    console.log("Page", page)
+    this.setState({currentPage: page})
+  }
 
-  let lst = _.zip(keys, values);
+  renderPageItems() {
+    return [1,2,3,4,5].map(num => {
+      if (num == this.state.currentPage) {
+        return (
+        <PaginationItem>
+          <PaginationLink key={num} className="cur-page" onClick={() => this.setState({currentPage: num})}>
+            {num}
+          </PaginationLink>
+        </PaginationItem>
+        )
+      } else {
+        return (
+        <PaginationItem>
+          <PaginationLink onClick={() => this.setState({currentPage: num})}>
+            {num}
+          </PaginationLink>
+        </PaginationItem>
+        )
+      }
+    })
+  }
 
-  lst = _.sortBy(lst, function(cc){
-    //console.log("cc", cc[1]["SortOrder"]);
-    return parseInt(cc[1]["SortOrder"]);
-  });
-  // variables
-  let coinList = _.map(_.map(lst, (cc) => cc[1]), (tt) => {
-    //onsole.log(tt);
-    return <CoinItem key={tt.CoinName} coin={tt} />
-  });
+  render () {
+    if (this.props.coins == null) return <div>Load...</div>;
+    // convert store.coins map to coinList
+    let keys = Object.keys(this.props.coins);
+    let values = Object.values(this.props.coins);
 
-  // methods
+    let lst = _.zip(keys, values);
 
-  // render
-  return<div>
-    <div className="jumbotron" style={{fontSize:30, backgroundImage: "url(" + "images/jumbotron.jpg" + ")"}}>
-      <span style={{color:'grey'}}>CryptoMonitor</span>
-    </div>
-    <Card style={{backgroundColor: '#DDDDDD',}}>
-      <CardBody>
-      <Row>
-          <Col>Icon</Col>
-          <Col>Coin</Col>
-          <Col>Price</Col>
-          <Col>7d Chart(USD)</Col>
-          <Col>Detail</Col>
-          <Col>Setting</Col>
-      </Row>
-    </CardBody>
-    </Card>
-
-    <div>
-      { coinList }
-    </div>
-
-  </div>;
-
+    lst = _.sortBy(lst, function(cc){
+      //console.log("cc", cc[1]["SortOrder"]);
+      return parseInt(cc[1]["SortOrder"]);
+    });
+    lst = lst.slice((this.state.currentPage - 1) * 20, this.state.currentPage * 20)
+    // variables
+    let coinList = _.map(_.map(lst, (cc) => cc[1]), (tt) => {
+      return <CoinItem key={tt.CoinName} coin={tt} />
+    });
+    return<div>
+      <div className="jumbotron" style={{fontSize:30, backgroundImage: "url(" + "images/jumbotron.jpg" + ")"}}>
+        <span style={{color:'grey'}}>CryptoMonitor</span>
+      </div>
+      <Card style={{backgroundColor: '#DDDDDD',}}>
+        <CardBody>
+        <Row>
+            <Col>Icon</Col>
+            <Col>Coin</Col>
+            <Col>Price</Col>
+            <Col>7d Chart(USD)</Col>
+            <Col>Detail</Col>
+            <Col>Setting</Col>
+        </Row>
+      </CardBody>
+      </Card>
+      <div>
+        { coinList }
+      </div>
+      <div className="page-group">
+          <Pagination>
+            <PaginationItem>
+            <PaginationLink previous onClick={this.previousPage} />
+          </PaginationItem>
+          {this.renderPageItems()}
+          <PaginationItem>
+            <PaginationLink next onClick={this.nextPage}/>
+          </PaginationItem>
+        </Pagination>
+      </div>
+    </div>;
+  }
 }
 
 function state2props(state) {

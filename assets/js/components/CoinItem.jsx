@@ -17,7 +17,7 @@ class CoinItem extends Component {
     super(props);
     this.state = {
       graphData: null, // [data, ...]
-      price: this.props.prices[this.props.coin.Symbol].USD,
+      price: this.props.prices[this.props.coin.Symbol] ? this.props.prices[this.props.coin.Symbol].USD : null,
       priceColor: "light"
     };
 
@@ -31,9 +31,11 @@ class CoinItem extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     let color = "light";
     const curPrice = prevState.price;
-    const nextPrice = nextProps.prices[nextProps.coin.Symbol].USD;
-    if (curPrice > nextPrice) color = "danger";
-    else if (curPrice < nextPrice) color = "success";
+    if (curPrice) {
+      const nextPrice = nextProps.prices[nextProps.coin.Symbol].USD;
+      if (curPrice > nextPrice) color = "danger";
+      else if (curPrice < nextPrice) color = "success";
+    }
     return {priceColor: color};
   }
 
