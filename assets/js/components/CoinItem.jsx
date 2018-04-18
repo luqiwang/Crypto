@@ -11,6 +11,10 @@ import cc from 'cryptocompare';
 import axios from 'axios'
 
 let iconUrl = "https://www.cryptocompare.com";
+const successBgColor = "rgba(42, 181, 60, 0.2)";
+const successColor = "rgba(42, 181, 60)";
+const dangerBgColor = "rgb(240, 34, 34, 0.2)";
+const dangerColor = "rgb(240, 34, 34)";
 
 class CoinItem extends Component {
 
@@ -27,7 +31,6 @@ class CoinItem extends Component {
   }
 
   componentDidMount() {
-    this.getHisto();
     this.getPriceFull();
   }
 
@@ -45,24 +48,27 @@ class CoinItem extends Component {
   getPriceFull() {
     const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${this.props.coin.Symbol}&tsyms=USD`
     axios.get(url)
-    .then(resp => {this.setState({priceFull: resp.data.DISPLAY[this.props.coin.Symbol]})})
+    .then(resp => {
+      this.setState({priceFull: resp.data.DISPLAY[this.props.coin.Symbol]});
+      this.getHisto();
+    })
     .catch(err => setTimeout(() => this.getPriceFull(), 1000));
   }
 
   getHisto() {
     cc.histoDay(this.props.coin.Symbol, 'USD', {limit: 7})
     .then(resp => this.setState({
-      graphData:
-        {
+      graphData: {
           labels: new Array(7),
           datasets: [
           {
             data: resp.map(o => o.close),
-            backgroundColor: "rgba(42, 181, 60, 0.2)",
-            borderColor: "rgba(42, 181, 60, 0.8)"
-          }]}
-      }))
-    .catch(err => setTimeout(() => this.getHisto() , 2000));
+            backgroundColor: parseFloat(this.state.priceFull.USD.CHANGE24HOUR.substr(2)) >= 0 ? successBgColor : dangerBgColor,
+            borderColor: parseFloat(this.state.priceFull.USD.CHANGE24HOUR.substr(2)) >= 0 ? successColor : dangerColor
+          }]
+        }})
+      )
+  .catch(err => setTimeout(() => this.getHisto() , 2000));
   }
 
   editCoin() {

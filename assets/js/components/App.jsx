@@ -20,13 +20,14 @@ class App extends Component {
       let channel = socket.channel("/", {})
       channel.join()
            .receive("ok", resp => {
-             console.log("Success Connect")
+             console.log("Success Connect", resp)
              this.props.getPrices(resp)
              this.props.getCoinList(resp)
 
            })
            .receive("error", resp => { console.log("Fail to join", resp) });
       channel.on("coin", resp => {
+        console.log("RESP", resp)
         this.props.getPrices(resp)
         this.props.getCoinList(resp)
       })

@@ -7,7 +7,7 @@ h2 {
 }
 
 .btn-social{
-  font-color: white;
+  color: white;
 }
 .nav-right{
   color: white;
@@ -30,4 +30,17 @@ h2 {
 .head-photo{
   width: 35px;
   height: 35px;
+}
+.cur-page{
+  background-color: lightblue
+}
+.page-group{
+  margin-top: 20px;
+  margin-left: 40%;
+  color: blue;
+}
+#login-container{
+  width: 50%;
+  margin: auto;
+  margin-top: 100px;
 }
