@@ -4,7 +4,7 @@ defmodule CryptoMonitor.Email do
   alias CryptoMonitor.Info
   alias CryptoMonitor.Coins
 
-  @template "Change my monitoring : #{System.get_env("MONITOR_URI")}"
+  @template "\n\nChange my monitoring #{System.get_env("MONITOR_URI")}"
 
   def start_link do
     # registered as Email
