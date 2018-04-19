@@ -33,7 +33,6 @@ function AlertForm(props) {
     } else {
       props.addAlert(data);
     }
-    props.fetchUser(props.user.id)
     props.flipAlertModal("MODAL_CLOSE");
     props.setWarn("");
   }
