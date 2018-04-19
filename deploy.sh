@@ -19,7 +19,7 @@ fi
 
 mix deps.get
 (cd assets && npm install)
-(cd assets && ./node_modules/brunch/bin/brunch b -p)
+(cd assets && ./node_modules/brunch/bin/brunch b)
 mix phx.digest
 
 mix release.init

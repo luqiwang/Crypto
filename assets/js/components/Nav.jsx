@@ -34,7 +34,7 @@ function Nav(props) {
         </div>
         <a href="/auth/signout"><div className="nav-right">Log out</div></a>
       </nav>
-      <div className="jumbotron" style={{fontSize:30, backgroundImage: "url(" + "images/jumbotron.jpg" + ")"}}>
+      <div className="jumbotron" style={{fontSize:30, backgroundImage: "url(" + "/images/jumbotron.jpg" + ")"}}>
         <span style={{color:'grey', fontFamily: "Georgia, serif"}}>Crypto Monitor</span>
       </div>
     </div>
