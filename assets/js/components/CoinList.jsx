@@ -35,15 +35,15 @@ class CoinList extends Component{
     return [1,2,3,4,5].map(num => {
       if (num == this.state.currentPage) {
         return (
-        <PaginationItem>
-          <PaginationLink key={num} className="cur-page" onClick={() => this.setState({currentPage: num})}>
+        <PaginationItem key={num}>
+          <PaginationLink className="cur-page" onClick={() => this.setState({currentPage: num})}>
             {num}
           </PaginationLink>
         </PaginationItem>
         )
       } else {
         return (
-        <PaginationItem>
+        <PaginationItem key={num}>
           <PaginationLink onClick={() => this.setState({currentPage: num})}>
             {num}
           </PaginationLink>

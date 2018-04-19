@@ -9,6 +9,10 @@ function Nav(props) {
   function editName() {
     props.setName(true);
   }
+  let photoUrl = props.user.photo;
+  if (props.user.provider == "facebook") {
+    photoUrl = "https" + props.user.photo.substr(4);
+  }
   return (
     <div>
       <nav className="navbar navbar-dark bg-primary navbar-expand">
@@ -30,7 +34,7 @@ function Nav(props) {
         </ul>
         <div className="nav-right" onClick={ editName }>
           <span id="span-name">{props.user.name}</span>
-          <img src={props.user.photo} className="head-photo"></img>
+          <img src={photoUrl} className="head-photo"></img>
         </div>
         <a href="/auth/signout"><div className="nav-right">Log out</div></a>
       </nav>

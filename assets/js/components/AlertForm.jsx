@@ -33,7 +33,6 @@ function AlertForm(props) {
     } else {
       props.addAlert(data);
     }
-    props.fetchUser(props.user.id)
     props.flipAlertModal("MODAL_CLOSE");
     props.setWarn("");
   }
@@ -48,7 +47,7 @@ function AlertForm(props) {
   }
 
   function deleteMonitor() {
-    props.deleteAlert(props.monitor.id)
+    props.deleteAlert(props.monitor.id, props.user.id)
     props.fetchUser(props.user.id)
     props.flipAlertModal("MODAL_CLOSE");
     props.setWarn("");
