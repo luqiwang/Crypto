@@ -24,9 +24,9 @@ export const editAlert = (coin_id, data) => async dispatch => {
 	fetchUser(data["user_id"])(dispatch);
 }
 
-export const deleteAlert = (id) => async dispatch => {
+export const deleteAlert = (id, user_id) => async dispatch => {
 	const res = await axios.delete('/api/v1/coins/' + id)
-	fetchUser(data["user_id"])(dispatch);
+	fetchUser(user_id)(dispatch);
 }
 
 export const setWarn = (message) => dispatch => {
