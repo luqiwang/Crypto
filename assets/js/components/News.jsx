@@ -42,6 +42,7 @@ export default class News extends Component {
       }
     }
 
+    $('.form-inline').submit((e) => {e.preventDefault(); this.setState({keyWord: $("#key").val()})});
 
     return (
       <div style={{padding: "10px"}}>

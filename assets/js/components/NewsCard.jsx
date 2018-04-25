@@ -27,7 +27,7 @@ export default function NewsCard(params) {
           <Media heading>
             <a href={nn.url}>{ nn.title }</a>
           </Media>
-          <p>{ nn.body }</p>
+          <p dangerouslySetInnerHTML={{__html: nn.body}}></p>
           <p style={{color: "grey"}}>Categories: <b>{nn.categories}</b></p>
           <Button outline href={nn.url} className="float-right">Read More</Button>
         </Media>
