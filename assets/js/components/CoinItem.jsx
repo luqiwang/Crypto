@@ -16,12 +16,21 @@ const successColor = "rgba(42, 181, 60)";
 const dangerBgColor = "rgb(240, 34, 34, 0.2)";
 const dangerColor = "rgb(240, 34, 34)";
 
+
 class CoinItem extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      graphData: null, // [data, ...]
+      graphData: {
+          labels: new Array(7),
+          datasets: [
+          {
+            data: Array.from({length: 7}, () => Math.floor(Math.random() * 7)),
+            backgroundColor: successBgColor,
+            borderColor: successColor
+          }]
+        }, // [data, ...]
       price: this.props.prices[this.props.coin.Symbol] ? this.props.prices[this.props.coin.Symbol].USD : null,
       priceColor: "light",
       priceFull: null, // from priceFull api
@@ -37,12 +46,13 @@ class CoinItem extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     let color = "light";
     const curPrice = prevState.price;
+    const nextPrice = nextProps.prices[nextProps.coin.Symbol].USD;
     if (curPrice) {
-      const nextPrice = nextProps.prices[nextProps.coin.Symbol].USD;
+      if (prevState.priceColor != "light") return null;
       if (curPrice > nextPrice) color = "danger";
       else if (curPrice < nextPrice) color = "success";
     }
-    return {priceColor: color};
+    return {price: nextPrice, priceColor: color};
   }
 
   getPriceFull() {
@@ -106,6 +116,7 @@ class CoinItem extends Component {
   }
 
   render() {
+
     if (this.state.priceColor != 'light') setTimeout(() => this.setState({priceColor: "light"}), 1000);
 
     let price = this.getPrice(this.props.coin.Symbol);
