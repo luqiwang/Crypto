@@ -46,12 +46,15 @@ class CoinItem extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     let color = "light";
     const curPrice = prevState.price;
+
+    if (!curPrice || !nextProps.prices[nextProps.coin.Symbol]) return null;
+
+
     const nextPrice = nextProps.prices[nextProps.coin.Symbol].USD;
-    if (curPrice) {
-      if (prevState.priceColor != "light") return null;
-      if (curPrice > nextPrice) color = "danger";
-      else if (curPrice < nextPrice) color = "success";
-    }
+
+    if (prevState.priceColor != "light") return null;
+    if (curPrice > nextPrice) color = "danger";
+    else if (curPrice < nextPrice) color = "success";
     return {price: nextPrice, priceColor: color};
   }
 
